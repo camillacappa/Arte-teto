@@ -1,0 +1,1186 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'Arte di Teto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Lexend:wght@400;500;700&display=swap">
+<style>
+/* Layout: una tavoletta centrale; ocra rossa delle grotte come accento, blu-ardesia della pietra, bronzo per i premi */
+:root{
+  --bg:#F4EEE6; --paper:#FFFDF9; --ink:#2A1F18; --muted:#6B5E54; --line:#E2D7CA;
+  --acc:#9C3A1C; --acc-soft:#F6E2D8;
+  --east:#3A6478; --east-soft:#DFEAF0;
+  --bronze:#94691E; --bronze-soft:#F5EBD6;
+  --ok:#2F7A46; --ok-soft:#E1F1E5; --ko:#B3372B; --ko-soft:#F8E1DD;
+  --display:"Marcellus","Trajan Pro",Georgia,serif;
+  --body:"Lexend","Avenir Next","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1A1512; --paper:#251E1A; --ink:#F2EAE2; --muted:#B0A396; --line:#3E342D;
+  --acc:#F0946E; --acc-soft:#3E2519; --east:#8EBBD0; --east-soft:#1E2E36;
+  --bronze:#E0B45E; --bronze-soft:#3A3020; --ok:#6CC488; --ok-soft:#1F3427; --ko:#F0897C; --ko-soft:#3D2522; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A1512; --paper:#251E1A; --ink:#F2EAE2; --muted:#B0A396; --line:#3E342D;
+  --acc:#F0946E; --acc-soft:#3E2519; --east:#8EBBD0; --east-soft:#1E2E36;
+  --bronze:#E0B45E; --bronze-soft:#3A3020; --ok:#6CC488; --ok-soft:#1F3427; --ko:#F0897C; --ko-soft:#3D2522; color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink); font-family:var(--body); font-size:18px; line-height:1.55; padding-inline:16px; padding-block:12px 60px; -webkit-tap-highlight-color:transparent}
+.wrap{max-width:860px; margin:0 auto; display:flex; flex-direction:column; gap:18px}
+h1,h2,h3{font-family:var(--display); font-weight:400; margin:0; line-height:1.15; text-wrap:balance}
+button{font:inherit; color:inherit; cursor:pointer}
+button:focus-visible{outline:3px solid var(--acc); outline-offset:2px}
+.frieze{height:8px; background:repeating-linear-gradient(90deg,var(--acc) 0 14px,transparent 14px 18px,var(--bronze) 18px 24px,transparent 24px 28px); opacity:.85; border-radius:2px}
+
+.top{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.brand{display:flex; align-items:center; gap:10px; flex:1 1 auto; min-width:0}
+.brand h1{font-size:clamp(24px,4.4vw,34px); letter-spacing:.03em}
+.brand h1 span{color:var(--acc)}
+.brand small{display:block; font-size:14px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
+.grade{display:flex; align-items:center; gap:8px; background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:6px 14px 6px 8px; font-size:15px}
+.grade b{font-family:var(--display); font-size:17px}
+.grade .pts{font-variant-numeric:tabular-nums; color:var(--muted)}
+.grade .dot{width:28px; height:28px; border-radius:50%; background:var(--bronze); color:var(--paper); display:grid; place-items:center; font-size:13px; font-weight:700}
+
+.tabs{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:6px}
+.tabs button{border:0; background:transparent; border-radius:11px; padding:10px 4px; font-size:15px; font-weight:500; display:flex; flex-direction:column; align-items:center; gap:2px; color:var(--muted)}
+.tabs button svg{width:24px; height:24px}
+.tabs button[aria-current="true"]{background:var(--acc-soft); color:var(--acc); font-weight:700}
+
+.marco{display:flex; align-items:flex-end; gap:10px}
+.marco svg{width:72px; height:72px; flex:none}
+.bubble{background:var(--paper); border:2px solid var(--ink); border-radius:18px 18px 18px 4px; padding:10px 14px; font-size:17px; line-height:1.45; min-width:0}
+.bubble .who{display:block; font-family:var(--display); font-size:14px; letter-spacing:.14em; color:var(--acc)}
+
+.panel{background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:18px}
+.secLabel{font-family:var(--display); font-size:22px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.secLabel small{font-family:var(--body); color:var(--muted); font-size:14px}
+
+/* Studia */
+.sez{background:var(--paper); border:1px solid var(--line); border-radius:16px; overflow:hidden}
+.sez summary{list-style:none; cursor:pointer; padding:14px 16px; display:flex; align-items:center; gap:12px}
+.sez summary::-webkit-details-marker{display:none}
+.sez .pg{font-family:var(--display); color:var(--acc); background:var(--acc-soft); border-radius:10px; min-width:46px; text-align:center; padding:4px 6px; font-size:15px; flex:none}
+.sez .tt{font-weight:700; flex:1; min-width:0}
+.sez .chev{transition:transform .2s; color:var(--muted)}
+.sez[open] .chev{transform:rotate(90deg)}
+.sez .body{padding:0 18px 16px; display:flex; flex-direction:column; gap:10px}
+.sez ul{margin:0; padding-left:22px; display:flex; flex-direction:column; gap:8px; max-width:65ch}
+.sez b{color:var(--acc)}
+.sez .d{font-variant-numeric:tabular-nums; background:var(--bronze-soft); color:var(--bronze); border-radius:6px; padding:0 5px; font-weight:700}
+.row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.btn{border:2px solid var(--acc); background:var(--acc); color:var(--paper); border-radius:14px; padding:10px 18px; font-weight:700; display:inline-flex; align-items:center; gap:8px}
+.btn.ghost{background:transparent; color:var(--acc)}
+.btn.small{padding:6px 12px; font-size:15px; border-radius:11px}
+.btn svg{width:20px; height:20px}
+.btn[disabled]{opacity:.45; cursor:default}
+.subtabs{display:flex; gap:6px; flex-wrap:wrap}
+.subtabs button{border:1px solid var(--line); background:var(--paper); border-radius:999px; padding:8px 16px; font-size:15px}
+.subtabs button[aria-current="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.gloss{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px}
+.word{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px 14px; min-width:0}
+.word b{font-family:var(--display); font-size:19px; display:block; color:var(--acc)}
+.word span{font-size:16px}
+.word i{display:block; font-style:normal; color:var(--muted); font-size:13px; margin-top:4px}
+.tl{position:relative; display:flex; flex-direction:column; gap:10px; padding-left:28px}
+.tl::before{content:""; position:absolute; left:9px; top:6px; bottom:6px; width:3px; background:var(--line); border-radius:2px}
+.tl .ev{position:relative; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:10px 14px; display:grid; grid-template-columns:112px 1fr; gap:10px; align-items:baseline}
+.tl .ev::before{content:""; position:absolute; left:-25px; top:16px; width:13px; height:13px; border-radius:50%; background:var(--acc); box-shadow:0 0 0 3px var(--bg)}
+.tl .ev.big::before{background:var(--bronze); width:17px; height:17px; left:-27px; top:14px}
+.tl .ev b{font-family:var(--display); font-size:18px; color:var(--acc); font-variant-numeric:tabular-nums}
+.tl .ev.big{border-color:var(--bronze); background:var(--bronze-soft)}
+.tl .era{font-family:var(--display); color:var(--muted); letter-spacing:.14em; text-transform:uppercase; font-size:14px}
+
+/* Giochi */
+.games{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px}
+.game{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:16px; text-align:left; display:flex; flex-direction:column; gap:6px; min-width:0}
+.game .ic{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--acc-soft); color:var(--acc)}
+.game .ic svg{width:26px; height:26px}
+.game.e .ic{background:var(--east-soft); color:var(--east)}
+.game.b .ic{background:var(--bronze-soft); color:var(--bronze)}
+.game b{font-family:var(--display); font-size:20px; font-weight:400}
+.game span{font-size:15px; color:var(--muted)}
+.game .best{font-size:13px; color:var(--bronze); font-weight:700}
+.game.star{border:2px solid var(--bronze); background:linear-gradient(var(--bronze-soft),var(--paper))}
+
+.play{display:flex; flex-direction:column; gap:14px}
+.phead{display:flex; align-items:center; gap:10px}
+.phead .back{border:1px solid var(--line); background:var(--paper); border-radius:12px; padding:8px 12px; display:flex; align-items:center; gap:4px; font-size:15px}
+.phead h2{flex:1; font-size:22px; min-width:0}
+.prog{height:10px; background:var(--line); border-radius:6px; overflow:hidden}
+.prog i{display:block; height:100%; background:var(--acc); transition:width .3s}
+.qbox{background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:20px; display:flex; flex-direction:column; gap:16px}
+.qline{display:flex; gap:12px; align-items:flex-start}
+.q{font-family:var(--display); font-size:clamp(22px,3.8vw,28px); line-height:1.3; flex:1; min-width:0}
+.speak{flex:none; width:46px; height:46px; border-radius:50%; border:2px solid var(--line); background:var(--paper); display:grid; place-items:center; color:var(--acc)}
+.speak svg{width:22px; height:22px}
+.opts{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+@media (max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{border:2px solid var(--line); background:var(--paper); border-radius:14px; padding:14px 16px; text-align:left; font-size:18px; min-height:62px; transition:transform .1s}
+.opt:active{transform:scale(.98)}
+.opt.ok{border-color:var(--ok); background:var(--ok-soft)}
+.opt.ko{border-color:var(--ko); background:var(--ko-soft); opacity:.75}
+.opt[disabled]{cursor:default}
+.vf{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.vf .opt{text-align:center; font-family:var(--display); font-size:26px; min-height:84px}
+.fb{border-radius:14px; padding:12px 16px; font-size:17px}
+.fb.ok{background:var(--ok-soft); color:var(--ok)}
+.fb.ko{background:var(--ko-soft); color:var(--ko)}
+.fb.hint{background:var(--bronze-soft); color:var(--bronze)}
+.fb p{margin:4px 0 0; color:var(--ink)}
+.pag{display:inline-block; font-size:13px; font-weight:700; border:1px solid currentColor; border-radius:999px; padding:0 8px; margin-left:6px}
+.meta{display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:15px; font-variant-numeric:tabular-nums}
+.clues{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px}
+.clues li{background:var(--bronze-soft); border-radius:12px; padding:10px 14px}
+.clues li b{font-family:var(--display); color:var(--bronze); margin-right:6px}
+.clues li.hid{background:transparent; border:2px dashed var(--line); color:var(--muted)}
+
+.chips{display:flex; flex-wrap:wrap; gap:10px}
+.chip{border:2px solid var(--line); background:var(--paper); border-radius:14px; padding:12px 14px; text-align:left; font-size:17px; flex:1 1 220px; min-width:0}
+.chip.ko{animation:shake .35s; border-color:var(--ko)}
+.chip.sel{border-color:var(--acc); background:var(--acc-soft)}
+.chip.done{border-color:var(--ok); background:var(--ok-soft); opacity:.7; cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){.chip.ko{animation:none}.prog i{transition:none}}
+.placed{display:flex; flex-direction:column; gap:8px}
+.placed div{display:grid; grid-template-columns:110px 1fr; gap:10px; background:var(--ok-soft); border-radius:12px; padding:10px 14px}
+.placed b{font-family:var(--display); color:var(--ok); font-variant-numeric:tabular-nums}
+.match{display:grid; grid-template-columns:1fr 1.6fr; gap:10px}
+.match .col{display:flex; flex-direction:column; gap:10px; min-width:0}
+.match .chip{flex:none}
+.match .col:first-child .chip{font-family:var(--display); font-size:19px}
+.card1{background:var(--paper); border:3px solid var(--ink); border-radius:18px; padding:22px; text-align:center; font-size:21px; font-weight:500}
+.bins{display:grid; gap:10px}
+.bin{--c:var(--acc); border:3px solid var(--c); background:var(--paper); border-radius:16px; padding:14px 8px; font-family:var(--display); font-size:clamp(16px,2.6vw,20px); color:var(--c); min-height:70px}
+.bin.e{--c:var(--east)} .bin.b{--c:var(--bronze)}
+.bin.ok{background:var(--ok-soft); border-color:var(--ok); color:var(--ok)}
+.bin.ko{background:var(--ko-soft); border-color:var(--ko); color:var(--ko)}
+
+.end{display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center}
+.score{font-family:var(--display); font-size:clamp(44px,9vw,72px); color:var(--acc); line-height:1}
+.voto{width:140px; height:140px; border-radius:50%; background:var(--bronze); color:var(--paper); display:grid; place-items:center; font-family:var(--display); font-size:58px; box-shadow:inset 0 0 0 6px var(--paper),0 0 0 4px var(--bronze)}
+.review{display:flex; flex-direction:column; gap:10px; width:100%; text-align:left}
+.review div{border:1px solid var(--line); border-radius:12px; padding:10px 14px; background:var(--paper)}
+.review .r{color:var(--ok); font-weight:700}
+.review .w{color:var(--ko); text-decoration:line-through}
+
+.ranks{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+@media (max-width:560px){.ranks{grid-template-columns:repeat(2,1fr)}}
+.rk{border:1px solid var(--line); border-radius:14px; padding:12px; text-align:center; background:var(--paper)}
+.rk b{display:block; font-family:var(--display); font-size:18px; font-weight:400}
+.rk span{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums}
+.rk.on{border:2px solid var(--bronze); background:var(--bronze-soft)}
+.rk.lock{opacity:.45}
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+.stat{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px; text-align:center}
+.stat b{display:block; font-family:var(--display); font-size:30px; font-variant-numeric:tabular-nums; color:var(--acc)}
+.stat span{font-size:14px; color:var(--muted)}
+.sezbar{display:grid; grid-template-columns:minmax(0,1fr) 120px 44px; gap:10px; align-items:center; font-size:15px}
+.sezbar .bar{height:10px; border-radius:6px; background:var(--line); overflow:hidden}
+.sezbar .bar i{display:block; height:100%; background:var(--east)}
+.sezbar span:last-child{text-align:right; color:var(--muted); font-variant-numeric:tabular-nums}
+.toggle{display:flex; align-items:center; gap:10px; font-size:16px}
+.toggle input{width:22px; height:22px; accent-color:var(--acc)}
+.note{font-size:14px; color:var(--muted)}
+.confirm{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+
+/* Capitolo Mesopotamia: blu lapislazzuli al posto dell'ocra */
+:root[data-cap="meso"]{--acc:#2C4FA3; --acc-soft:#E1E8F8; --east:#2F7A72; --east-soft:#DDF0EC}
+@media (prefers-color-scheme: dark){:root[data-cap="meso"]:not([data-theme="light"]){--acc:#8FA9F0; --acc-soft:#1F2A47; --east:#7CCBBE; --east-soft:#1B3330}}
+:root[data-cap="meso"][data-theme="dark"]{--acc:#8FA9F0; --acc-soft:#1F2A47; --east:#7CCBBE; --east-soft:#1B3330}
+.capsw{display:grid; grid-template-columns:1fr 1fr; gap:6px; background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:5px}
+.capsw button{border:0; background:transparent; border-radius:10px; padding:8px 6px; font-size:15px; color:var(--muted); line-height:1.25}
+.capsw button small{display:block; font-size:12px; letter-spacing:.08em; text-transform:uppercase}
+.capsw button[aria-current="true"]{background:var(--ink); color:var(--paper); font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* ============ CONTENUTI (solo dalle foto del libro: cap. 1 «L'arte della Preistoria», pp. 24–38) ============ */
+let SEZ=[
+ {id:"s1",t:"Che cos'è la Preistoria",p:26,punti:[
+  "La **Preistoria** va dalla **comparsa dei primi mammiferi del genere Homo** (circa [2,5 milioni di anni fa]) fino all'**invenzione della scrittura** (intorno al [3200 a.C.]).",
+  "Circa [2 milioni di anni fa] gli uomini iniziano a fabbricare **strumenti**: comincia l'**Età della pietra**, chiamata così per il materiale con cui erano fatti.",
+  "Sappiamo come vivevano grazie all'**archeologia**, che cerca, porta alla luce e studia le **tracce** lasciate dai nostri antenati.",
+  "Queste testimonianze mostrano il **progredire delle loro abilità** e la nascita, circa [40.000 anni fa], delle **prime forme d'arte**."]},
+ {id:"s2",t:"L'Età della pietra: Paleolitico, Mesolitico, Neolitico",p:26,punti:[
+  "L'Età della pietra si divide in **tre grandi periodi**.",
+  "**Paleolitico** («pietra antica»): da circa [2 milioni di anni fa] al [10.000 a.C.]. L'uomo è un **cacciatore nomade**, vive in piccoli gruppi di famiglie, si ripara nelle **caverne** e usa il **fuoco** per scaldarsi. Compare l'**Homo sapiens**.",
+  "**Mesolitico** («pietra di mezzo»): dall'ultima glaciazione ([10.000 a.C.]) al [6000 a.C.]. L'ambiente cambia molto, ma l'uomo vive più o meno come nel Paleolitico.",
+  "**Neolitico** («pietra nuova»): dal [6000 a.C.] al [4000 a.C.]. L'uomo diventa **stanziale**: costruisce **villaggi** e **palafitte** (capanne sopraelevate su pali) e le prime **necropoli** (le «città dei morti»).",
+  "Nel Neolitico da cacciatore nomade diventa **agricoltore**, commercia con il **baratto** e comincia a lavorare la **ceramica**."]},
+ {id:"s3",t:"L'Età dei metalli e le prime forme d'arte",p:26,punti:[
+  "Intorno al [4000 a.C.] inizia l'**Età dei metalli**: per strumenti e armi si usa il **metallo** al posto della pietra.",
+  "Si divide in **Età del rame**, **Età del bronzo** ed **Età del ferro**, secondo il metallo più diffuso. Continua anche **dopo la fine della Preistoria**.",
+  "Le **prime forme d'arte** risalgono all'ultima fase del Paleolitico ([35.000–10.000 a.C.]): sono le **pitture rupestri**, cioè pitture sulle pareti di roccia delle caverne.",
+  "Nel Paleolitico nascono anche le **prime sculture**, quasi sempre **piccole**, con **figure femminili e animali**.",
+  "Nel **Neolitico**, quando l'uomo diventa stanziale, nascono le prime **grandi costruzioni in pietra**."]},
+ {id:"s4",t:"Pittura: perché dipingevano le caverne",p:28,punti:[
+  "La pittura sulle pareti delle caverne è **la più antica forma d'arte** degli esseri umani. Pitture rupestri sono state trovate **in tutto il mondo**.",
+  "Raffigurano soprattutto **scene di caccia** e **animali**: bisonti, cervi, cavalli, tori e anche animali oggi estinti come i **mammut**.",
+  "Non sappiamo con certezza a cosa servissero: forse a raccontare la vita di ogni giorno o, più probabilmente, erano **immagini propiziatorie**, cioè servivano a ottenere il **favore delle forze della natura**.",
+  "Ci mostrano che l'**Homo sapiens era un abile disegnatore**.",
+  "Le pitture rupestri continuano per millenni; nel **Mesolitico** si aggiunge una nuova tecnica: l'**incisione su roccia**."]},
+ {id:"s5",t:"Le grotte dipinte in Europa",p:28,punti:[
+  "Le zone più grandi con pitture rupestri sono in **Francia** e in **Spagna**, e sono state scoperte tutte **per caso**.",
+  "**Grotta di Chauvet** (Francia): la **più antica** ([36.000–32.000 anni fa]) e la **più ricca di figure**. È stata trovata solo nel [1994]. Qui c'è l'**Impronta di mano** ([30.000 a.C.] ca.).",
+  "**Grotta di Lascaux** (Francia): risale a circa [21.000 anni fa] ed è stata scoperta nel [1940]. È lunga **oltre 200 metri** e ha **tre diramazioni**.",
+  "A Lascaux ci sono migliaia di disegni: **più di 6000 animali** (cavalli, bisonti, cervi, leoni, orsi, rinoceronti) e **una sola figura umana**. Molti animali sono circondati dalle **frecce dei cacciatori**. Famosa la **Sala dei tori** ([16.000–14.000 a.C.]).",
+  "**Grotta di Altamira** (Spagna): è conosciuta dalla **fine dell'Ottocento**; le figure risalgono a [19.000–18.000 anni fa]."]},
+ {id:"s6",t:"Materiali e tecniche della pittura",p:28,p2:29,punti:[
+  "Si partiva dalla **linea di contorno**, fatta con i **carboncini** rimasti dai fuochi spenti.",
+  "Poi si colorava con **terre e minerali pestati** (ocra, rosso, bruno) mescolati a sostanze che funzionavano da **colla**: **grasso animale** o **sostanze vegetali**.",
+  "I colori si stendevano con le **dita**, con **pennelli** fatti di **peli animali**, oppure venivano **soffiati** (una specie di «**tecnica spray**»): il colore si metteva in **ossa cave** e si soffiava sulla parete, o si spruzzava con la **bocca**.",
+  "Spesso l'artista **sfruttava il colore naturale della roccia**, come nel **Cavallo con frecce** di Lascaux: dipingeva solo la parte del pelo di colore diverso dalla pietra.",
+  "I disegni sono spesso **in alto**: forse si costruivano dei **ponteggi** per lavorare.",
+  "Gli artisti rispettavano le **proporzioni** degli animali in modo **realistico**."]},
+ {id:"s7",t:"Le incisioni rupestri",p:29,punti:[
+  "I primi **graffiti**, o **incisioni rupestri**, risalgono a circa [10.000 anni fa] e continuano fino all'**Età del ferro** ([1000–500 a.C.]).",
+  "Si facevano **incidendo segni** su massi e pareti con **rocce dure** come le **selci**; più tardi, nell'Età del ferro, con **punte metalliche**.",
+  "Le incisioni della **Valle Camonica** (provincia di **Brescia**), dell'Età del ferro, mostrano **scene di caccia**, **vita quotidiana** e **cerimonie rituali**.",
+  "Sono **molto meno realistiche** delle pitture del Paleolitico: animali, uomini e attrezzi sono disegnati **in modo schematico**.",
+  "Esempio: l'**Incisione con carro** (Naquane, Capo di Ponte): il carro è **visto dall'alto**, con le ruote affiancate, mentre gli animali sono **di fianco**, uno sopra l'altro. Così si mostrava un oggetto **da più punti di vista nello stesso momento**."]},
+ {id:"s8",t:"Le prime sculture del Paleolitico",p:30,punti:[
+  "Le prime sculture dell'Homo sapiens sono **statuette** di **figure femminili e animali**, in **pietra**, **osso** e **avorio**.",
+  "Servivano probabilmente a ottenere la **protezione delle forze della natura**, da cui dipendeva la sopravvivenza.",
+  "Sono tutte **piccole**, forse perché le comunità **nomadi** dovevano poterle **trasportare**.",
+  "La **Signora di Brassempouy** ([23.000 a.C.] ca., **avorio**, alta 3,65 cm) è la **più antica rappresentazione di un volto umano**: su una **zanna d'avorio** sono incisi con cura viso e capelli.",
+  "Le statuette più numerose sono le **«Veneri»** (come la dea greca dell'amore e della bellezza): mettono in evidenza **seno e ventre**. Servivano forse a **favorire la fecondità** delle donne: più figli = più cacciatori e raccoglitori per procurarsi il cibo.",
+  "Molte sono a **tuttotondo**, altre a **rilievo**, come la **Venere di Laussel** ([23.000 a.C.] ca., bassorilievo su calcare), con un **corno di bisonte** in mano: lo scultore ha usato la parte **convessa** della pietra per far sporgere il ventre."]},
+ {id:"s9",t:"Lettura d'opera: la Venere di Willendorf",p:32,punti:[
+  "È una **piccola scultura** che raffigura **una donna**. Prende il nome dalla località in **Austria** dove fu scoperta. L'**autore è sconosciuto**.",
+  "Oggi è conservata a **Vienna**, al **Museo di Storia Naturale**.",
+  "È alta **appena 11 cm**, in **pietra calcarea**, fatta con la tecnica del **tuttotondo**. Risale a circa [25.000 anni fa].",
+  "Il volto è **nascosto da un copricapo**, forse una **cuffia** fatta cucendo tante **conchiglie**.",
+  "Il corpo è **morbido e abbondante** e i seni grandi fanno pensare che sia **incinta**. **Braccia** e **piedi** sono poco visibili: lo scultore li ha solo **abbozzati**.",
+  "Era forse un oggetto **di buon auspicio**: nuovi figli volevano dire la **sopravvivenza del gruppo** e più persone per procurarsi il cibo."]},
+ {id:"s10",t:"Statue-stele e bronzi nuragici",p:31,punti:[
+  "L'arte del **Neolitico** si riconosce per la **semplificazione delle forme**. Nascono le **statue-stele**: **lastre di pietra** scolpite con forme **antropomorfe** (cioè umane).",
+  "La **Dama di Saint-Sernin** ([III millennio a.C.], pietra arenaria, Francia) è una figura femminile a **bassorilievo**: si riconoscono occhi, braccia, seni e gambe.",
+  "Forse era una **divinità** messa a **difesa di una sepoltura o di un villaggio**. È una delle più antiche rappresentazioni della figura umana.",
+  "Nell'**Età dei metalli** si fanno sculture anche in **bronzo**: tantissime statuette sono state trovate in **Sardegna**, soprattutto nelle **sepolture**.",
+  "La **Madre dell'ucciso** ([VII secolo a.C.], bronzo, alta 10 cm, Cagliari): una donna seduta su uno **sgabello** tiene in grembo un **uomo morto**, forse il **figlio morto in battaglia** (sul petto ha un **pugnale corto**, l'arma dei guerrieri nuragici).",
+  "La posa fa pensare all'**offerta alla divinità** del sacrificio del figlio da parte della madre."]},
+ {id:"s11",t:"Le architetture megalitiche",p:33,punti:[
+  "Dal **V millennio a.C.** in Europa si diffondono le **costruzioni megalitiche**, o **megaliti** (dal greco *mégas* = grande e *líthos* = pietra), fatte con **grandi pietre**.",
+  "La loro funzione **non è sempre chiara**: forse **riti religiosi**, **sepoltura dei morti** e **osservazione dei fenomeni celesti**.",
+  "Richiedevano **sforzi enormi**: per costruirli si fermavano anche **caccia, allevamento e agricoltura**. Per questo dovevano avere un **significato importantissimo**.",
+  "**Menhir** (dal bretone «**pietra lunga**»): **un unico blocco** di pietra piantato nel terreno **in verticale**. Spesso sono in lunghe file dette **allineamenti** (Carnac, Francia). Trucco: pensa a **Obelix** con il masso sulle spalle!",
+  "**Dolmen** (dal bretone «**tavola di pietra**»): **due grandi pietre verticali** e **una orizzontale** sopra, come copertura (Dolmen della **Chianca**, Bisceglie).",
+  "Il dolmen usa il **sistema trilitico** («fatto di tre pietre»), che è alla base dell'architettura: due **piedritti** verticali reggono il peso dell'**architrave** orizzontale.",
+  "**Cromlech** (dal gallese «**pietra ricurva**»): **dolmen disposti in cerchio**. Il più famoso è **Stonehenge**, in Gran Bretagna."]},
+ {id:"s12",t:"Il cromlech di Stonehenge",p:34,punti:[
+  "Si trova a **Salisbury** (Regno Unito). Fu costruito in **tre periodi diversi**, tra il [3100] e il [1500 a.C.] circa.",
+  "Oggi restano parti di **due anelli concentrici di dolmen**, alti **fino a 7 metri** (diametro esterno circa 31 m).",
+  "La funzione non è certa: per la posizione delle pietre rispetto al **Sole**, si pensa che qui si facessero **riti legati ai movimenti del Sole** e che fosse un **gigantesco calendario**.",
+  "Nella pianta si vedono il **cerchio dei triliti**, il **cerchio dei monoliti**, triliti e monoliti **a ferro di cavallo** e la direzione dei raggi del sole nel **solstizio d'estate**.",
+  "Le pietre venivano dalla **Scozia**, a **oltre 700 km**, e pesano **fino a 25 tonnellate**: forse furono trasportate con **rulli**, **slitte** e **per mare**. Questo dimostra le grandi **capacità organizzative e tecniche** delle comunità neolitiche."]},
+ {id:"s13",t:"I nuraghi",p:35,punti:[
+  "I **nuraghi** sono costruzioni megalitiche che esistono **solo in Sardegna**: da loro prende il nome la **civiltà nuragica**. Si costruiscono a partire dal **II millennio a.C.**",
+  "Sono **torri a forma di tronco di cono**, fatte con grosse pietre messe una sull'altra **a secco**, cioè **senza materiali leganti**.",
+  "La funzione cambiava da un complesso all'altro: forse **torri di avvistamento e di difesa** e **depositi per gli alimenti**.",
+  "Non erano isolati, ma **in gruppi numerosi**. Il complesso meglio conservato è **Su Nuraxi** a **Barùmini** (Cagliari, dal [1500 a.C.] al III secolo d.C.).",
+  "Esempio: il **Nuraghe Santa Barbara** (Macomer, Nuoro), del [XV secolo a.C.].",
+  "*Attenzione: sul libro c'è scritto «II millennio d.C.», ma è un errore di stampa: è a.C. (lo confermano le date sotto le foto).*"]}
+];
+
+// Le opere (scheda): [nome, data, tecnica e materiale, dove si trova, pagina]
+let OPERE=[
+ ["Impronta di mano","30.000 a.C. ca.","Pittura su roccia","Grotta Chauvet (Francia)",26],
+ ["Sala dei tori","16.000–14.000 a.C.","Graffiti, carboncino e ocra su calcare","Grotte di Lascaux (Francia)",28],
+ ["Cavallo con frecce","16.000–14.000 a.C.","Graffiti, carboncino e ocra su calcare","Grotte di Lascaux (Francia)",29],
+ ["Incisione con carro","Età del ferro","Incisione su pietra","Naquane, Capo di Ponte (Brescia)",29],
+ ["Signora di Brassempouy","23.000 a.C. ca.","Avorio, alta 3,65 cm","Musée d'Archéologie Nationale, Saint-Germain-en-Laye (Francia)",30],
+ ["Venere di Laussel","23.000 a.C. ca.","Bassorilievo su calcare, alta 46 cm","Musée d'Aquitaine, Bordeaux (Francia)",30],
+ ["Venere di Willendorf","circa 25.000 anni fa","Pietra calcarea a tuttotondo, alta 11 cm","Museo di Storia Naturale, Vienna (Austria)",32],
+ ["Dama di Saint-Sernin","III millennio a.C. ca.","Statua-stele in pietra arenaria, 120 × 70 cm","Museo Fenaille, Rodez (Francia)",31],
+ ["Madre dell'ucciso","VII secolo a.C.","Bronzo, alta 10 cm","Museo Archeologico Nazionale, Cagliari",31],
+ ["Allineamento di menhir","XIV–XIII secolo a.C.","Menhir","Carnac (Francia)",33],
+ ["Dolmen della Chianca","XVI–XIV secolo a.C. ca.","Dolmen","Bisceglie (Barletta-Andria-Trani)",33],
+ ["Stonehenge","3100–1500 a.C.","Cromlech, diametro esterno 31 m ca.","Salisbury (Regno Unito)",34],
+ ["Nuraghe Santa Barbara","XV secolo a.C.","Nuraghe","Macomer (Nuoro)",35],
+ ["Su Nuraxi","1500 a.C. – III secolo d.C.","Complesso nuragico","Barumini (Cagliari)",35]
+];
+
+let EV=[ // [ordine, anno scritto, evento, pagina, importante]
+ [-2500000,"2,5 milioni di anni fa","Compaiono i primi uomini del genere Homo: inizia la Preistoria",26,1],
+ [-2000000,"2 milioni di anni fa","Primi strumenti: inizia l'Età della pietra (Paleolitico)",26,1],
+ [-35000,"35.000 a.C.","Prime forme d'arte: le pitture rupestri",26,1],
+ [-30000,"30.000 a.C.","Impronta di mano nella Grotta Chauvet",26],
+ [-23000,"23.000 a.C.","Signora di Brassempouy e Venere di Laussel",30],
+ [-15000,"16.000–14.000 a.C.","Sala dei tori e Cavallo con frecce a Lascaux",28],
+ [-10000,"10.000 a.C.","Ultima glaciazione: finisce il Paleolitico, inizia il Mesolitico",26,1],
+ [-8000,"10.000 anni fa","Primi graffiti (incisioni rupestri)",29],
+ [-6000,"6000 a.C.","Inizia il Neolitico: l'uomo diventa stanziale e agricoltore",26,1],
+ [-4000,"4000 a.C.","Inizia l'Età dei metalli; prime costruzioni in pietra",26,1],
+ [-3200,"3200 a.C.","Invenzione della scrittura: finisce la Preistoria",26,1],
+ [-3100,"3100–1500 a.C.","Si costruisce Stonehenge",34,1],
+ [-2500,"III millennio a.C.","Dama di Saint-Sernin (statua-stele)",31],
+ [-1550,"XVI–XIV sec. a.C.","Dolmen della Chianca a Bisceglie",33],
+ [-1500,"1500 a.C.","Nasce il complesso nuragico di Su Nuraxi a Barumini",35],
+ [-1450,"XV secolo a.C.","Nuraghe Santa Barbara a Macomer",35],
+ [-1350,"XIV–XIII sec. a.C.","Allineamenti di menhir a Carnac",33],
+ [-1000,"1000–500 a.C.","Età del ferro: incisioni con punte metalliche (Valle Camonica)",29],
+ [-650,"VII secolo a.C.","Madre dell'ucciso, bronzo nuragico",31]
+];
+let ERE=[[-2500000,"Paleolitico"],[-10000,"Mesolitico"],[-6000,"Neolitico"],[-4000,"Età dei metalli"]];
+
+let PAROLE=[ // [parola, significato, pagina]
+ ["Preistoria","Periodo dalla comparsa del genere Homo all'invenzione della scrittura",26],
+ ["Archeologia","Scienza che cerca, porta alla luce e studia le tracce dei nostri antenati",26],
+ ["Paleolitico","Età della «pietra antica»",26],
+ ["Mesolitico","Età della «pietra di mezzo»",26],
+ ["Neolitico","Età della «pietra nuova»",26],
+ ["Nomade","Che si sposta sempre, senza una casa fissa",26],
+ ["Stanziale","Che vive sempre nello stesso posto",26],
+ ["Palafitte","Capanne sopraelevate su pali",26],
+ ["Necropoli","Le «città dei morti», dove si seppellivano i defunti",26],
+ ["Baratto","Scambiare merci senza usare denaro",26],
+ ["Pitture rupestri","Pitture sulle pareti di roccia delle caverne",26],
+ ["Immagini propiziatorie","Immagini per ottenere il favore delle forze della natura",28],
+ ["Linea di contorno","Il primo disegno a carboncino, che segna il bordo della figura",28],
+ ["Ocra","Terra colorata usata come colore (gialla, rossa, bruna)",28],
+ ["Graffiti","Incisioni rupestri: segni incisi sulla roccia",29],
+ ["Selce","Roccia dura usata per incidere",29],
+ ["Schematico","Disegnato in modo semplice, poco realistico",29],
+ ["Tuttotondo","Scultura tridimensionale lavorata su ogni lato",30],
+ ["Rilievo","Figure che sporgono da un fondo",30],
+ ["Altorilievo","Rilievo che sporge molto dal fondo",30],
+ ["Bassorilievo","Rilievo che sporge poco dal fondo",30],
+ ["Veneri","Statuette femminili del Paleolitico con seno e ventre in evidenza",30],
+ ["Fecondità","Capacità di avere figli",30],
+ ["Buon auspicio","Che porta fortuna",32],
+ ["Statue-stele","Lastre di pietra scolpite con forme umane",31],
+ ["Antropomorfo","Con forma umana",31],
+ ["Megaliti","Costruzioni con grandi pietre (mégas = grande, líthos = pietra)",33],
+ ["Menhir","Un unico blocco di pietra verticale («pietra lunga»)",33],
+ ["Dolmen","Due pietre verticali e una orizzontale («tavola di pietra»)",33],
+ ["Cromlech","Dolmen disposti in cerchio («pietra ricurva»)",33],
+ ["Allineamenti","Lunghe file di menhir",33],
+ ["Sistema trilitico","Sistema costruttivo formato da tre pietre",33],
+ ["Piedritti","Le due pietre verticali che reggono il peso",33],
+ ["Architrave","La pietra orizzontale appoggiata sopra i piedritti",33],
+ ["A secco","Pietre messe una sull'altra senza materiali leganti",35],
+ ["Nuraghe","Torre a tronco di cono della Sardegna",35]
+];
+
+// Domande: [sezione, domanda, [giusta, sbagliata, sbagliata, sbagliata], spiegazione]
+let QS=[
+["s1","Quando inizia la Preistoria?",["Con la comparsa dei primi uomini del genere Homo, circa 2,5 milioni di anni fa","Con l'invenzione della scrittura","Con la nascita di Roma","Con le prime pitture rupestri"],""],
+["s1","Quando finisce la Preistoria?",["Con l'invenzione della scrittura, intorno al 3200 a.C.","Con la fine del Paleolitico, nel 10.000 a.C.","Con la costruzione di Stonehenge","Con l'Età del ferro"],"Dopo la scrittura inizia la Storia."],
+["s1","Perché si chiama «Età della pietra»?",["Per il materiale con cui erano fatti gli strumenti","Perché si viveva in case di pietra","Perché si dipingeva sulla pietra","Perché c'erano i megaliti"],""],
+["s1","Quale scienza ci fa conoscere come vivevano gli uomini preistorici?",["L'archeologia","La geografia","L'astronomia","La biologia"],"Cerca, porta alla luce e studia le tracce lasciate dai nostri antenati."],
+["s1","Circa quando nascono le prime forme d'arte?",["40.000 anni fa","2 milioni di anni fa","3200 a.C.","Nel Neolitico"],""],
+["s2","Cosa vuol dire «Paleolitico»?",["Età della pietra antica","Età della pietra nuova","Età della pietra di mezzo","Età dei metalli"],""],
+["s2","Come viveva l'uomo nel Paleolitico?",["Cacciatore nomade, in piccoli gruppi, riparato nelle caverne","Agricoltore in villaggi","In palafitte vicino ai laghi","In grandi città"],""],
+["s2","In quale periodo compare l'Homo sapiens?",["Paleolitico","Mesolitico","Neolitico","Età dei metalli"],""],
+["s2","Cosa vuol dire «Neolitico»?",["Età della pietra nuova","Età della pietra antica","Età della pietra di mezzo","Età del bronzo"],""],
+["s2","Nel Neolitico l'uomo diventa...",["stanziale e agricoltore","nomade e cacciatore","pittore di caverne","costruttore di nuraghi"],"Costruisce villaggi e palafitte."],
+["s2","Che cosa sono le palafitte?",["Capanne sopraelevate su pali","Tombe di pietra","Grotte dipinte","Torri di difesa"],""],
+["s2","Che cos'è una necropoli?",["Una «città dei morti», dove si seppellivano i defunti","Un villaggio sul lago","Un mercato per il baratto","Una grotta dipinta"],""],
+["s2","Quando va il Mesolitico?",["Dal 10.000 al 6000 a.C.","Dal 6000 al 4000 a.C.","Da 2 milioni di anni fa al 10.000 a.C.","Dal 4000 al 3200 a.C."],"Inizia con l'ultima glaciazione."],
+["s3","Quando inizia l'Età dei metalli?",["Intorno al 4000 a.C.","Intorno al 10.000 a.C.","Intorno al 3200 a.C.","2 milioni di anni fa"],""],
+["s3","In quali età si divide l'Età dei metalli?",["Rame, bronzo e ferro","Oro, argento e bronzo","Pietra, rame e ferro","Bronzo, ferro e acciaio"],""],
+["s3","Quali sono le prime forme d'arte?",["Le pitture rupestri","I nuraghi","Le statue in bronzo","I dolmen"],""],
+["s3","Come erano quasi sempre le prime sculture del Paleolitico?",["Piccole, con figure femminili e animali","Enormi, con figure di re","In bronzo","Grandi lastre di pietra"],""],
+["s3","Quando nascono le prime grandi costruzioni in pietra?",["Nel Neolitico, quando l'uomo diventa stanziale","Nel Paleolitico","Dopo la scrittura","Nel Mesolitico"],""],
+["s4","Qual è la forma d'arte più antica degli esseri umani?",["La pittura sulle pareti delle caverne","La scultura in bronzo","L'architettura megalitica","La ceramica"],""],
+["s4","Cosa rappresentano soprattutto le pitture rupestri?",["Scene di caccia e animali","Ritratti di re","Paesaggi di mare","Città e villaggi"],"Bisonti, cervi, cavalli, tori e mammut."],
+["s4","Che cosa sono le «immagini propiziatorie»?",["Immagini per ottenere il favore delle forze della natura","Immagini per decorare la casa","Mappe per la caccia","Ritratti dei capi"],""],
+["s4","Quale animale estinto compare nelle pitture?",["Il mammut","Il dinosauro","Il leone marino","Il drago"],""],
+["s4","Quale tecnica si aggiunge nel Mesolitico?",["L'incisione su roccia","La pittura a olio","La scultura in bronzo","Il mosaico"],""],
+["s5","Dove sono le zone più grandi con pitture rupestri?",["In Francia e in Spagna","In Italia e in Grecia","In Austria e in Germania","In Sardegna"],""],
+["s5","Qual è la grotta dipinta più antica e più ricca di figure?",["Grotta di Chauvet","Grotta di Lascaux","Grotta di Altamira","Valle Camonica"],"36.000–32.000 anni fa, scoperta nel 1994."],
+["s5","Quando è stata scoperta la Grotta di Lascaux?",["Nel 1940","Nel 1994","Alla fine dell'Ottocento","Nel 1500"],""],
+["s5","Quante figure umane ci sono a Lascaux?",["Una sola","Più di 6000","Nessuna","Cento"],"Gli animali invece sono più di 6000."],
+["s5","Cosa circonda molti animali dipinti a Lascaux?",["Le frecce dei cacciatori","Impronte di mani","Alberi","Stelle"],""],
+["s5","Quando è stata scoperta la Grotta di Altamira?",["Alla fine dell'Ottocento","Nel 1940","Nel 1994","Nel Medioevo"],""],
+["s5","Come sono state scoperte le grotte dipinte?",["Tutte per caso","Con i satelliti","Seguendo antiche mappe","Grazie a Obelix"],""],
+["s6","Con che cosa si faceva la linea di contorno?",["Con i carboncini dei fuochi spenti","Con il pennello e l'ocra","Con le dita bagnate","Con punte di metallo"],""],
+["s6","Con cosa si coloravano i disegni?",["Terre e minerali pestati (ocra, rosso, bruno)","Colori a olio","Succo di frutta","Inchiostro di seppia"],""],
+["s6","A cosa serviva il grasso animale?",["Da colla, per mescolare i colori","Per accendere il fuoco","Per lucidare la roccia","Per cancellare"],"Anche le sostanze vegetali facevano da colla."],
+["s6","Cos'era la «tecnica spray» preistorica?",["Soffiare il colore con ossa cave o con la bocca","Usare bombolette","Lanciare sassi colorati","Dipingere sotto la pioggia"],""],
+["s6","Nel Cavallo con frecce, cosa ha sfruttato l'artista?",["Il colore naturale della roccia","La luce del sole","Il fumo del fuoco","L'acqua della grotta"],"Ha dipinto solo il pelo di colore diverso dalla pietra."],
+["s6","Perché si pensa che usassero dei ponteggi?",["Perché i disegni sono spesso in alto","Perché le grotte erano allagate","Perché i disegni sono enormi","Perché lavoravano di notte"],""],
+["s7","A quando risalgono i primi graffiti?",["Circa 10.000 anni fa","2 milioni di anni fa","3200 a.C.","VII secolo a.C."],"Continuano fino all'Età del ferro (1000–500 a.C.)."],
+["s7","Con cosa si incideva prima dei metalli?",["Con rocce dure come le selci","Con pennelli","Con le unghie","Con il fuoco"],""],
+["s7","Dove si trova la Valle Camonica?",["In provincia di Brescia","In Sardegna","In Francia","In Puglia"],""],
+["s7","Cosa mostrano le incisioni della Valle Camonica?",["Caccia, vita quotidiana e cerimonie rituali","Solo cavalli e bisonti","Ritratti di donne","Mappe del cielo"],""],
+["s7","Come sono le incisioni rispetto alle pitture del Paleolitico?",["Meno realistiche, schematiche","Più realistiche","Più colorate","Più grandi"],""],
+["s7","Nell'Incisione con carro, come è disegnato il carro?",["Visto dall'alto, con le ruote affiancate","Di fianco, come in una foto","Di fronte","Non c'è nessun carro"],"Gli animali invece sono di fianco: più punti di vista insieme."],
+["s8","Di quali materiali sono le prime statuette?",["Pietra, osso e avorio","Bronzo e ferro","Legno e argilla","Oro e argento"],""],
+["s8","Perché le sculture del Paleolitico sono piccole?",["Le comunità nomadi dovevano trasportarle","Non c'era abbastanza pietra","Erano giocattoli per bambini","Le grotte erano piccole"],""],
+["s8","Qual è la più antica rappresentazione di un volto umano?",["La Signora di Brassempouy","La Venere di Willendorf","La Dama di Saint-Sernin","La Madre dell'ucciso"],"È incisa su una zanna d'avorio."],
+["s8","Perché si chiamano «Veneri»?",["Come la dea greca dell'amore e della bellezza","Perché trovate a Venezia","Perché fatte di venerdì","Dal nome dello scultore"],""],
+["s8","A cosa servivano probabilmente le Veneri?",["A favorire la fecondità delle donne","A decorare le tombe","A segnare i confini","A contare i giorni"],"Più figli = più cacciatori e raccoglitori."],
+["s8","Cosa tiene in mano la Venere di Laussel?",["Un corno di bisonte","Una lancia","Un bambino","Una conchiglia"],""],
+["s8","Con che tecnica è fatta la Venere di Laussel?",["Bassorilievo","Tuttotondo","Pittura","Incisione su avorio"],""],
+["s8","Che cos'è il tuttotondo?",["Una scultura lavorata su ogni lato","Una scultura che sporge da un fondo","Un dipinto rotondo","Una costruzione circolare"],""],
+["s9","Da dove prende il nome la Venere di Willendorf?",["Dalla località in Austria dove fu scoperta","Dal suo scultore","Da un museo francese","Da una dea"],""],
+["s9","Dove è conservata oggi la Venere di Willendorf?",["Al Museo di Storia Naturale di Vienna","A Cagliari","A Bordeaux","A Lascaux"],""],
+["s9","Quanto è alta la Venere di Willendorf?",["11 cm","46 cm","3,65 cm","7 metri"],""],
+["s9","Di che materiale è la Venere di Willendorf?",["Pietra calcarea","Avorio","Bronzo","Osso"],""],
+["s9","Cosa nasconde il volto della Venere di Willendorf?",["Un copricapo, forse una cuffia di conchiglie","Una maschera di bronzo","Le sue mani","Un velo dipinto"],""],
+["s9","Chi è l'autore della Venere di Willendorf?",["È sconosciuto","Un artista greco","Lo stesso di Lascaux","Un monaco"],""],
+["s9","Perché braccia e piedi sono poco visibili?",["Lo scultore li ha solo abbozzati","Si sono rotti","Sono nascosti dal copricapo","Sono stati cancellati"],""],
+["s10","Come si riconosce l'arte del Neolitico?",["Dalla semplificazione delle forme","Dal grande realismo","Dall'uso del bronzo","Dai colori vivaci"],""],
+["s10","Che cosa sono le statue-stele?",["Lastre di pietra scolpite con forme umane","Statue di bronzo","Torri di pietra","Pitture su roccia"],""],
+["s10","Cosa potrebbe rappresentare la Dama di Saint-Sernin?",["Una divinità a difesa di una sepoltura o di un villaggio","Una regina","Una cacciatrice","Una madre con il figlio"],""],
+["s10","Dove sono state trovate tante statuette in bronzo?",["In Sardegna, soprattutto nelle sepolture","In Francia, nelle grotte","In Austria","In Valle Camonica"],""],
+["s10","Cosa tiene in grembo la Madre dell'ucciso?",["Un uomo morto, forse il figlio","Un corno di bisonte","Un vaso","Un bambino che dorme"],""],
+["s10","Quale indizio fa pensare a un figlio morto in battaglia?",["Un pugnale corto sul petto","Una corona","Uno scudo in mano","Una ferita sulla testa"],"Era l'arma dei guerrieri nuragici."],
+["s10","Cosa significa «antropomorfo»?",["Con forma umana","Con forma di animale","Senza forma","Molto grande"],""],
+["s11","Cosa vuol dire «megalito»?",["Grande pietra","Pietra lunga","Tavola di pietra","Pietra ricurva"],"Dal greco mégas (grande) e líthos (pietra)."],
+["s11","Da quando si diffondono i megaliti in Europa?",["Dal V millennio a.C.","Dal Paleolitico","Dal VII secolo a.C.","Dopo la scrittura"],""],
+["s11","Che cos'è un menhir?",["Un unico blocco di pietra verticale","Due pietre verticali e una orizzontale","Dolmen in cerchio","Una torre a tronco di cono"],""],
+["s11","Che cos'è un dolmen?",["Due pietre verticali e una orizzontale sopra","Un unico blocco verticale","Dolmen in cerchio","Una lastra scolpita"],""],
+["s11","Che cos'è un cromlech?",["Dolmen disposti in cerchio","Una fila di menhir","Una tomba a torre","Una grotta"],""],
+["s11","Come si chiamano le lunghe file di menhir?",["Allineamenti","Cromlech","Piedritti","Necropoli"],"Le più famose sono a Carnac."],
+["s11","Nel sistema trilitico, come si chiama la pietra orizzontale?",["Architrave","Piedritto","Menhir","Stele"],""],
+["s11","Nel sistema trilitico, come si chiamano le pietre verticali?",["Piedritti","Architravi","Cromlech","Allineamenti"],""],
+["s11","Quale personaggio dei fumetti ti aiuta a ricordare il menhir?",["Obelix","Topolino","Asterix","Paperino"],"Porta sempre un grosso masso sulle spalle."],
+["s11","Perché i megaliti erano così importanti?",["Per costruirli si fermavano anche caccia e agricoltura","Erano case per tutti","Servivano da mercati","Erano facili da costruire"],""],
+["s12","Dove si trova Stonehenge?",["A Salisbury, nel Regno Unito","In Francia, a Carnac","In Sardegna","In Austria"],""],
+["s12","In quanto tempo fu costruito Stonehenge?",["In tre periodi, tra il 3100 e il 1500 a.C.","In un solo anno","In 10 anni, nel 4000 a.C.","Nel Paleolitico"],""],
+["s12","Cosa resta oggi di Stonehenge?",["Parti di due anelli concentrici di dolmen","Una sola torre","Una fila di menhir","Una grotta dipinta"],"Alti fino a 7 metri."],
+["s12","A cosa serviva forse Stonehenge?",["Come gigantesco calendario legato al Sole","Come fortezza","Come mercato","Come villaggio"],""],
+["s12","Da dove venivano le pietre di Stonehenge, secondo il libro?",["Dalla Scozia, a oltre 700 km","Dalla Francia","Da una cava vicina","Dalla Sardegna"],""],
+["s12","Quanto pesano al massimo le pietre di Stonehenge?",["25 tonnellate","2 tonnellate","100 chili","700 tonnellate"],""],
+["s12","Come furono trasportate le pietre?",["Con rulli, slitte e per mare","Con i camion","Con i cavalli soltanto","Rotolando giù dalle colline"],""],
+["s13","Dove si trovano i nuraghi?",["Solo in Sardegna","In tutta Europa","In Francia","In Valle Camonica"],""],
+["s13","Che forma hanno i nuraghi?",["Torri a tronco di cono","Cerchi di dolmen","Lastre verticali","Piramidi"],""],
+["s13","Cosa vuol dire costruire «a secco»?",["Senza materiali leganti","Senza acqua nei dintorni","Solo d'estate","Con pietre piccole"],""],
+["s13","A cosa servivano forse i nuraghi?",["Torri di avvistamento e difesa, e depositi di cibo","Tombe dei re","Calendari solari","Templi per le Veneri"],""],
+["s13","Qual è il complesso nuragico meglio conservato?",["Su Nuraxi a Barumini","Stonehenge","Carnac","Nuraghe di Lascaux"],""],
+["s13","Da quando si costruiscono i nuraghi?",["Dal II millennio a.C.","Dal Paleolitico","Dal III secolo d.C.","Dal 10.000 a.C."],"Sul libro c'è un errore di stampa: «d.C.»."]
+];
+
+// Vero o falso: [frase, vero?, correzione, pagina]
+let VF=[
+["La Preistoria finisce con l'invenzione della scrittura.",1,"",26],
+["La scrittura è stata inventata intorno al 3200 a.C.",1,"",26],
+["Paleolitico vuol dire «pietra nuova».",0,"Paleolitico = pietra antica. Pietra nuova è il Neolitico.",26],
+["Nel Paleolitico l'uomo era un cacciatore nomade.",1,"",26],
+["Nel Neolitico l'uomo diventa stanziale.",1,"",26],
+["Le palafitte sono grotte dipinte.",0,"Sono capanne sopraelevate su pali.",26],
+["Nel Neolitico si commerciava con il baratto.",1,"",26],
+["L'Età dei metalli inizia intorno al 4000 a.C.",1,"",26],
+["L'Età dei metalli si divide in rame, bronzo e ferro.",1,"",26],
+["Le prime forme d'arte sono le pitture rupestri.",1,"",26],
+["Le pitture rupestri si trovano solo in Francia.",0,"Sono state trovate in tutto il mondo.",28],
+["Le pitture rupestri mostrano soprattutto scene di caccia e animali.",1,"",28],
+["La Grotta di Chauvet è la più antica.",1,"",28],
+["La Grotta di Lascaux è stata scoperta nel 1994.",0,"Nel 1940. Chauvet è del 1994.",28],
+["A Lascaux ci sono tantissime figure umane.",0,"C'è una sola figura umana.",28],
+["La linea di contorno si faceva con il carboncino.",1,"",28],
+["Il grasso animale serviva da colla per i colori.",1,"",28],
+["Gli artisti preistorici usavano solo le dita.",0,"Anche pennelli di peli animali e la «tecnica spray».",29],
+["Le incisioni della Valle Camonica sono molto realistiche.",0,"Sono schematiche, meno realistiche delle pitture.",29],
+["La Valle Camonica è in provincia di Brescia.",1,"",29],
+["Le prime statuette erano grandi e pesanti.",0,"Erano piccole, per poterle trasportare.",30],
+["La Signora di Brassempouy è in avorio.",1,"",30],
+["Le Veneri servivano forse a favorire la fecondità.",1,"",30],
+["Il tuttotondo è una scultura lavorata su ogni lato.",1,"",30],
+["La Venere di Laussel è una scultura a tuttotondo.",0,"È un bassorilievo.",30],
+["La Venere di Willendorf è alta 11 cm.",1,"",32],
+["La Venere di Willendorf è conservata a Parigi.",0,"È a Vienna, al Museo di Storia Naturale.",32],
+["La Venere di Willendorf è di bronzo.",0,"È di pietra calcarea.",32],
+["Le statue-stele sono lastre di pietra con forme umane.",1,"",31],
+["La Madre dell'ucciso è una statuetta di bronzo nuragica.",1,"",31],
+["Megalito vuol dire «grande pietra».",1,"",33],
+["Il menhir è formato da tre pietre.",0,"È un unico blocco verticale. Tre pietre = dolmen.",33],
+["Il dolmen ha due pietre verticali e una orizzontale.",1,"",33],
+["Il cromlech è un insieme di dolmen in cerchio.",1,"",33],
+["L'architrave è la pietra verticale.",0,"L'architrave è orizzontale; le verticali sono i piedritti.",33],
+["Stonehenge si trova in Francia.",0,"Si trova a Salisbury, nel Regno Unito.",34],
+["Stonehenge forse era un gigantesco calendario.",1,"",34],
+["I nuraghi si trovano solo in Sardegna.",1,"",35],
+["I nuraghi sono costruiti con la malta.",0,"Sono costruiti a secco, senza materiali leganti.",35],
+["I nuraghi sorgevano da soli, isolati.",0,"Sorgevano in gruppi numerosi.",35]
+];
+
+// Opere: [nome, [indizio difficile, medio, facile], pagina]
+let CHI=[
+["Impronta di mano",["Ho circa 30.000 anni.","Sono rossa, su una parete di roccia.","Mi trovi nella Grotta Chauvet: sono il segno di una mano."],26],
+["Sala dei tori",["Sono fatta di graffiti, carboncino e ocra su calcare.","Risalgo al 16.000–14.000 a.C.","Sono nella Grotta di Lascaux, piena di grandi tori."],28],
+["Cavallo con frecce",["Sono a Lascaux.","L'artista ha usato il colore naturale della roccia per il mio mantello.","Sono un animale colpito dalle frecce dei cacciatori."],29],
+["Incisione con carro",["Sono dell'Età del ferro.","Mi trovi a Naquane, Capo di Ponte (Brescia).","Mi vedi dall'alto, con le ruote affiancate."],29],
+["Signora di Brassempouy",["Sono alta solo 3,65 cm.","Sono fatta di avorio, da una zanna.","Sono il più antico volto umano rappresentato."],30],
+["Venere di Laussel",["Sono un bassorilievo su calcare.","Sono conservata a Bordeaux.","Tengo in mano un corno di bisonte."],30],
+["Venere di Willendorf",["Il mio autore è sconosciuto.","Sono alta 11 cm, in pietra calcarea.","Il mio volto è nascosto da una cuffia di conchiglie e vivo a Vienna."],32],
+["Dama di Saint-Sernin",["Sono del III millennio a.C.","Sono una statua-stele in pietra arenaria.","Forse sono una divinità che protegge una sepoltura o un villaggio."],31],
+["Madre dell'ucciso",["Sono alta 10 cm e vivo a Cagliari.","Sono di bronzo, della civiltà nuragica.","Seduta su uno sgabello, tengo in grembo mio figlio morto."],31],
+["Allineamento di menhir",["Risalgo al XIV–XIII secolo a.C.","Siamo tanti blocchi verticali messi in fila.","Ci trovi a Carnac, in Francia."],33],
+["Dolmen della Chianca",["Risalgo al XVI–XIV secolo a.C.","Ho due pietre verticali e una orizzontale.","Mi trovi a Bisceglie, in Puglia."],33],
+["Stonehenge",["Sono stato costruito in tre periodi.","Le mie pietre pesano fino a 25 tonnellate.","Sono il cromlech più famoso, a Salisbury."],34],
+["Nuraghe Santa Barbara",["Sono del XV secolo a.C.","Sono una torre a tronco di cono.","Mi trovi a Macomer, in provincia di Nuoro."],35],
+["Su Nuraxi",["Sono stato abitato dal 1500 a.C. al III secolo d.C.","Sono un grande gruppo di nuraghi.","Sono il complesso nuragico meglio conservato, a Barumini."],35]
+];
+
+let ARTI={bins:["Pittura","Scultura","Architettura"],items:[
+ ["Impronta di mano",0],["Sala dei tori",0],["Cavallo con frecce",0],["Grotta di Altamira",0],["Carboncino e ocra",0],["Incisioni della Valle Camonica",0],["Tecnica spray",0],
+ ["Venere di Willendorf",1],["Signora di Brassempouy",1],["Venere di Laussel",1],["Dama di Saint-Sernin",1],["Madre dell'ucciso",1],["Tuttotondo",1],["Statue-stele",1],
+ ["Menhir",2],["Dolmen della Chianca",2],["Stonehenge",2],["Nuraghi",2],["Sistema trilitico",2],["Architrave",2]]};
+let SMISTA=[
+ {id:"ere",t:"Paleolitico, Neolitico o Età dei metalli?",bins:["Paleolitico","Neolitico","Età dei metalli"],cls:["","e","b"],items:[
+  ["Cacciatore nomade",0],["Si ripara nelle caverne",0],["Compare l'Homo sapiens",0],["Prime pitture rupestri",0],["Veneri e Signora di Brassempouy",0],
+  ["Villaggi e palafitte",1],["Agricoltura e baratto",1],["Prime necropoli",1],["Si lavora la ceramica",1],["Statue-stele e forme semplificate",1],
+  ["Rame, bronzo e ferro",2],["Madre dell'ucciso",2],["Incisioni con punte metalliche",2],["Statuette nuragiche in bronzo",2]]},
+ {id:"mdc",t:"Menhir, dolmen o cromlech?",bins:["Menhir","Dolmen","Cromlech"],cls:["","e","b"],items:[
+  ["Un unico blocco verticale",0],["«Pietra lunga»",0],["Allineamenti di Carnac",0],["Il masso di Obelix",0],
+  ["Due pietre verticali e una orizzontale",1],["«Tavola di pietra»",1],["Chianca di Bisceglie",1],["Sistema trilitico",1],
+  ["Dolmen disposti in cerchio",2],["«Pietra ricurva»",2],["Stonehenge",2],["Parola gallese",2]]}
+];
+
+const CAP_PRE={SEZ,OPERE,EV,ERE,PAROLE,QS,VF,CHI,ARTI,SMISTA};
+
+/* ============ CAPITOLO 2 · MESOPOTAMIA (foto del libro cap. 2 «L'arte delle civiltà fluviali», pp. 42–47 + mappe e schede) ============ */
+const CAP_MESO={
+SEZ:[
+ {id:"m1",t:"Le civiltà fluviali e la Mesopotamia",p:42,punti:[
+  "«**Civiltà fluviali**» sono le culture nate tra il [V e il I millennio a.C.] lungo il corso di **grandi fiumi**.",
+  "Sulle rive del **Tigri** e dell'**Eufrate** fiorirono le **civiltà mesopotamiche**; sulle sponde del **Nilo** la **civiltà egizia**.",
+  "In greco **Mesopotamia** significa «**terra tra i fiumi**». Oggi corrisponde ai territori di **Iraq, Iran e Siria**.",
+  "Qui nacquero invenzioni fondamentali come la **scrittura** e la **ruota**, le **prime religioni** e le **prime forme di potere**."]},
+ {id:"m2",t:"L'agricoltura e la nascita delle città",p:42,punti:[
+  "La pianura mesopotamica è abitata almeno dal [IX millennio a.C.]. La gente viveva in **villaggi**.",
+  "Con opere di **canalizzazione** impararono a regolare il Tigri e l'Eufrate: aumentò la **fertilità del terreno**.",
+  "L'agricoltura fu aiutata dall'**aratro** (lavoro meno pesante) e dalla **ruota** (trasporti più facili).",
+  "Per gestire i tanti prodotti agricoli nacquero le **città**, con case, strade, botteghe e magazzini: diventarono **centri del potere**, guidati da un **sovrano**.",
+  "Il passaggio dai villaggi del Neolitico alle città si chiama «**rivoluzione urbana**»."]},
+ {id:"m3",t:"Una terra per tre popoli",p:42,punti:[
+  "**Sumeri** (dal [4000] al [1700 a.C.]): città di **Ur**, **Lagash** e **Uruk**, governate da sovrani.",
+  "**Babilonesi** (dal [2000] al [539 a.C.]): grande territorio con capitale **Babilonia**.",
+  "**Assiri** (dal [1100] al [612 a.C.]): fondarono un impero con capitale **Ninive**.",
+  "*Nelle mappe trovi anche gli **Accadi** e i **Persiani**, altri popoli che dominarono quest'area.*"]},
+ {id:"m4",t:"La scrittura, la religione, il potere",p:42,punti:[
+  "La **scrittura** segna il passaggio dalla preistoria alla storia. La inventarono i **Sumeri**.",
+  "Due esigenze: **stendere elenchi** dei prodotti agricoli e **condividere regole** chiare per amministrare le città.",
+  "Con i sovrani la scrittura servì anche per **tenere traccia** di ciò che stabilivano.",
+  "**Stele di Hammurabi** (prima metà del [XVIII secolo a.C.], basalto, Louvre): in alto il re **Hammurabi** incontra il **dio del Sole**; sotto, **8000 parole** in **caratteri cuneiformi** (a forma di cuneo). È una delle **prime raccolte di leggi** della storia.",
+  "Nacquero le prime **religioni**, con il **culto di divinità**: il dio del Sole sumero **Shamash** e la dea babilonese **Ishtar**, protettrice dell'**amore e della guerra**.",
+  "C'era uno **stretto legame tra religione e potere**: il sovrano poteva garantire agli uomini il **favore degli dèi**."]},
+ {id:"m5",t:"L'architettura e l'invenzione del mattone",p:44,punti:[
+  "Sumeri e Babilonesi costruirono edifici per **celebrare il potere dei sovrani** e **onorare le divinità**.",
+  "Le città erano difese da **possenti mura** con **maestose porte**, che i Babilonesi abbellirono con immagini eleganti e colorate.",
+  "In Mesopotamia mancavano **legname** e **cave di pietra**, ma c'era tanta **argilla** lungo i fiumi: nacque il **mattone**.",
+  "L'argilla veniva **mischiata a sabbia e paglia tritata**, poi schiacciata in **cassette di legno** a forma di **parallelepipedo**.",
+  "Prima il mattone si faceva **seccare al sole** (mattone **crudo**), poi si cominciò a **cuocerlo in forno** (mattone **cotto**): così era **più resistente**.",
+  "*Dalle mappe:* il mattone era **economico**, si poteva fare **direttamente sul posto** e permetteva di costruire **dove non c'erano cave di pietra**."]},
+ {id:"m6",t:"La ziqqurat",p:44,punti:[
+  "**Ziqqurat** (si scrive anche *ziggurat*) significa «**essere elevato**»: rappresentava il **legame tra terra e cielo**.",
+  "È un edificio gigantesco **in mattoni**, fatto di **3–8 gradoni** sovrapposti a forma di **tronchi di piramide**.",
+  "Dentro c'erano **sale di rappresentanza**, **magazzini** e **depositi d'acqua**; **in cima** un **tempio**, nel luogo più vicino al cielo.",
+  "Le **scale** per salire erano **esterne**. **Niente finestre**: le aperture davano su **cortili interni ombreggiati**, per tenere fresco.",
+  "La **ziqqurat di Ur** fu costruita intorno al [2100 a.C.] dal re sumero **Ur-Nammu** in onore del **dio della luna Nannar**. Aveva almeno **tre piani**; la ricostruzione di oggi ne ha **uno**.",
+  "Dentro la muratura è in **mattoni crudi**, fuori in **mattoni cotti**, più resistenti nel tempo.",
+  "*Dalle mappe:* la ziqqurat era il **centro della vita religiosa, economica e politica**: area sacra in cima, funzioni pubbliche alla base (magazzini, granai, scuole, botteghe)."]},
+ {id:"m7",t:"Lo splendore di Babilonia e la Porta di Ishtar",p:45,punti:[
+  "Con il re **Nabucodonosor II** ([604–562 a.C.]) Babilonia raggiunse il massimo splendore.",
+  "Era circondata da **mura in mattoni** con **250 torri** e **8 porte**; era famosa per i **giardini pensili**, cioè coltivati **su terrazze** (una delle **7 meraviglie** del mondo antico).",
+  "La **Porta di Ishtar**, dedicata alla dea dell'amore e della guerra, era la **principale delle otto porte**. Da qui partiva la **via delle processioni** verso una grande ziqqurat.",
+  "La porta e la via erano rivestite di **mattonelle invetriate** con **leoni, draghi e tori**, rappresentati **di profilo**, **in movimento** e **a rilievo**.",
+  "Oggi una **ricostruzione** (con parti originali) è al **Pergamonmuseum di Berlino**: alta **14,75 m**, larga **15,70 m**.",
+  "**Invetriatura**: sull'argilla si stende una miscela di sabbia e altre sostanze che, dopo la cottura, diventa **come vetro**: la terracotta è **impermeabile e brillante**.",
+  "*Dalle mappe:* il **toro** era il simbolo di **Adad**, dio della tempesta; il **drago** era il simbolo di **Marduk**, protettore della città."]},
+ {id:"m8",t:"La Torre di Babele",p:45,punti:[
+  "È un **edificio leggendario** di cui parla la **Bibbia**, nella città di Babilonia.",
+  "Gli uomini volevano costruire una torre che **arrivasse al cielo**, per ambizione.",
+  "Dio **confuse le loro lingue**: non riuscivano più a capirsi e si dispersero sulla Terra.",
+  "Questo **mito** spiega l'origine delle **diverse lingue e culture**; è una **metafora dell'arroganza umana** e della mancanza di umiltà."]},
+ {id:"m9",t:"La scultura e le statuette degli oranti",p:46,punti:[
+  "Le sculture più antiche sono dei **Sumeri**: raffigurano **divinità** e **oranti** (uomini in preghiera).",
+  "Sono statue **piccole**, di **gesso, alabastro o terracotta**, quasi sempre **a tuttotondo**.",
+  "Si sviluppò anche la **scultura a rilievo**, per la religione e per **celebrare i sovrani**.",
+  "Dal [IX secolo a.C.] gli **Assiri** fecero rilievi e **imponenti statue** di esseri soprannaturali a protezione delle città: i **Lamassu**.",
+  "Le statuette degli oranti si lasciavano **dentro i templi** o si seppellivano **nelle fondamenta**, per affidare il cantiere alla divinità.",
+  "La **Statua di orante** (forse **Eannatum**, re sumero di **Lagash**) ha le **mani giunte**, un **gonnellino a ciocche di lana**, il corpo **sproporzionato** e **occhi grandi e sbarrati**: indicano **devozione e concentrazione**."]},
+ {id:"m10",t:"Pittura e bassorilievi: la Stele di Naram-Sin",p:46,punti:[
+  "Della **pittura** mesopotamica ci sono rimasti **pochissimi** resti: i più famosi sono i **dipinti parietali** del **Palazzo Reale di Zimri-Lim a Mari**.",
+  "La **Stele di Naram-Sin** ([2250 a.C.] ca., Louvre) è un **bassorilievo**: celebra il **trionfo** del re **Naram-Sin** sul popolo dei **Lullubi**.",
+  "Il re guida l'esercito, è **più grande** dei soldati, armato di **lancia e arco**, e porta un **copricapo con le corna**, simbolo della sua **natura divina**.",
+  "La battaglia si svolge in **montagna** (dove vivevano i Lullubi): si vedono un **rilievo** e un **albero**.",
+  "I **due astri** in alto indicano la **protezione degli dèi** sull'impresa.",
+  "*Dalla scheda:* si legge **dal basso** (i guerrieri) **verso l'alto** (il re); a sinistra i **vincitori**, a destra i **nemici vinti**. *La scheda la chiama «accadica» e dice «calcare»: il libro dice «arenaria».*"]},
+ {id:"m11",t:"I Lamassu e lo Stendardo di Ur",p:47,punti:[
+  "Il re assiro **Sargon II** ([721–705 a.C.]) fece costruire un grande palazzo, protetto da due enormi **Lamassu**.",
+  "I Lamassu sono **creature alate** con **corpo di toro** e **testa umana**. La testa è **a tuttotondo**, il resto è in **altorilievo**.",
+  "Hanno **5 zampe**: **di fronte** sembrano **fermi**, **di lato** sembrano **in movimento**. *(Dalle mappe: erano spiriti buoni che difendevano i palazzi dalle forze del male.)*",
+  "Lo **Stendardo di Ur** ([2550 a.C.] ca., British Museum) fu trovato in una **tomba regale a Ur**, capitale sumera. Non si sa bene cosa fosse: un **vessillo**, la cassa di uno **strumento musicale** o un **contenitore** prezioso.",
+  "È in **legno** rivestito di tessere di **lapislazzuli** (pietra blu rara e preziosa), **pietra calcarea rossastra** e **conchiglie**: questa tecnica si chiama **intarsio**.",
+  "Ha due lati: uno **di guerra** e uno **di pace**. Le storie si leggono **dal basso verso l'alto** e finiscono con il **re**, più grande degli altri.",
+  "Le figure hanno il **busto di fronte** (frontale) e **gambe e testa di profilo**."]},
+ {id:"m12",t:"Ripasso dalle mappe e dalle schede",p:"schede",punti:[
+  "L'arte mesopotamica è uno **strumento del potere assoluto del sovrano**: ha **forme rigorose e modelli fissi** (sarà così anche in Egitto) e una **funzione celebrativa**.",
+  "Ne fanno parte **edifici pubblici**, **decorazioni ricche**, **bassorilievi**, **piastrelle smaltate**, **mura possenti** e **tesori funerari**.",
+  "I **rilievi** raccontano **guerre**, **cacce** e la **vita di corte**; sono in **bronzo o pietra** e pieni di **azione e movimento**.",
+  "I **palazzi reali** avevano scalinate, portici, ampie sale e corridoi; i muri avevano **poche aperture** ed erano decorati con **terracotta smaltata**.",
+  "I **Persiani** costruirono il **Palazzo di Persepoli** (voluto da **Dario I**). Il **Fregio degli arcieri** del **Palazzo di Susa** ha figure **rigide, di profilo e ripetute sempre uguali**.",
+  "Le sculture dei Sumeri: **piccole statue di uomini in preghiera** (come **Gudea**, [2100 a.C.]) e le **prime tecniche di lavorazione dei metalli**."]}
+],
+OPERE:[
+ ["Stele di Hammurabi","prima metà del XVIII sec. a.C.","Basalto, 225 × 79 cm","Museo del Louvre, Parigi",42],
+ ["Ziqqurat di Ur","2100 a.C. ca.","Mattoni crudi dentro, cotti fuori","Ur (Iraq)",44],
+ ["Porta di Ishtar","VI secolo a.C.","Mattoni e ceramiche invetriate, h 14,75 m","Pergamonmuseum, Berlino (ricostruzione)",45],
+ ["Statua di orante","2900–2350 a.C.","Alabastro, lapislazzuli e madreperla, h 30 cm","Collezione Menil, Houston (USA)",46],
+ ["Stele di Naram-Sin","2250 a.C. ca.","Bassorilievo in arenaria, h 2 m","Museo del Louvre, Parigi",46],
+ ["Lamassu di Nimrud","721–705 a.C.","Alabastro gessoso, h 313 cm","Metropolitan Museum of Art, New York",47],
+ ["Stendardo di Ur","2550 a.C. ca.","Intarsio di lapislazzuli, conchiglie, calcare e bitume su legno, 22 × 50 cm","British Museum, Londra",47],
+ ["Palazzo di Persepoli","al tempo di Dario I","Palazzo dei Persiani","Persepoli (Iran)","scheda"],
+ ["Fregio degli arcieri","dal Palazzo di Susa","Terracotta smaltata","Palazzo di Susa","scheda"]
+],
+EV:[
+ [-8500,"IX millennio a.C.","La pianura mesopotamica è già abitata da villaggi",42],
+ [-4000,"4000 a.C.","Inizia la civiltà dei Sumeri (Ur, Lagash, Uruk)",42,1],
+ [-2900,"2900–2350 a.C.","Statua di orante (forse il re Eannatum)",46],
+ [-2550,"2550 a.C. ca.","Stendardo di Ur",47,1],
+ [-2250,"2250 a.C.","Stele di Naram-Sin",46,1],
+ [-2100,"2100 a.C.","Ziqqurat di Ur del re Ur-Nammu",44,1],
+ [-2000,"2000 a.C.","Inizia il regno dei Babilonesi",42,1],
+ [-1750,"XVIII sec. a.C.","Stele di Hammurabi, una delle prime raccolte di leggi",42,1],
+ [-1700,"1700 a.C.","Finisce la civiltà dei Sumeri",42],
+ [-1100,"1100 a.C.","Inizia l'impero degli Assiri (capitale Ninive)",42,1],
+ [-850,"IX secolo a.C.","Gli Assiri scolpiscono grandi rilievi e i Lamassu",46],
+ [-713,"721–705 a.C.","Regno di Sargon II: i Lamassu del suo palazzo",47,1],
+ [-612,"612 a.C.","Finisce l'impero degli Assiri",42],
+ [-583,"604–562 a.C.","Regno di Nabucodonosor II: Babilonia al massimo splendore",45,1],
+ [-575,"VI secolo a.C.","Porta di Ishtar",45,1],
+ [-539,"539 a.C.","Finisce il regno dei Babilonesi",42,1]
+],
+ERE:[[-8500,"Prima delle città"],[-4000,"I Sumeri"],[-2000,"I Babilonesi"],[-1100,"Gli Assiri"],[-583,"Babilonia di Nabucodonosor"]],
+PAROLE:[
+ ["Mesopotamia","In greco: «terra tra i fiumi» (Tigri ed Eufrate)",42],
+ ["Civiltà fluviali","Culture nate lungo grandi fiumi tra il V e il I millennio a.C.",42],
+ ["Rivoluzione urbana","Il passaggio dai villaggi del Neolitico alle città",42],
+ ["Cuneiforme","Scrittura con segni a forma di cuneo",42],
+ ["Stele","Lastra di pietra con iscrizioni o rilievi",42],
+ ["Ziqqurat","«Essere elevato»: edificio a gradoni con un tempio in cima",44],
+ ["Mattone crudo","Mattone di argilla seccato al sole",44],
+ ["Mattone cotto","Mattone cotto in forno, più resistente",44],
+ ["Giardini pensili","Giardini coltivati su terrazze",45],
+ ["Invetriatura","Strato che dopo la cottura diventa come vetro: terracotta impermeabile e brillante",45],
+ ["Orante","Persona rappresentata mentre prega, a mani giunte",46],
+ ["Tuttotondo","Scultura che si può guardare da tutti i lati",46],
+ ["Bassorilievo","Figure che sporgono poco dal fondo",46],
+ ["Altorilievo","Figure che sporgono molto dal fondo",47],
+ ["Lamassu","Creatura alata con corpo di toro e testa umana",47],
+ ["Intarsio","Disegni fatti con tessere di materiali diversi incastrate",47],
+ ["Lapislazzuli","Pietra dura blu, molto rara e preziosa",47],
+ ["Vessillo","Stendardo, insegna da portare in alto",47]
+],
+QS:[
+["m1","Che cosa significa «Mesopotamia»?",["Terra tra i fiumi","Terra del sole","Grande pianura","Città delle torri"],"È una parola greca."],
+["m1","Quali fiumi attraversano la Mesopotamia?",["Il Tigri e l'Eufrate","Il Nilo e il Tigri","Il Po e il Tevere","Il Nilo e l'Eufrate"],"Sul Nilo nasce invece la civiltà egizia."],
+["m1","Perché si parla di «civiltà fluviali»?",["Perché nacquero lungo il corso di grandi fiumi","Perché vivevano sulle barche","Perché adoravano il dio dei fiumi","Perché costruivano ponti"],""],
+["m1","Lungo quale fiume nacque la civiltà egizia?",["Il Nilo","Il Tigri","L'Eufrate","Il Danubio"],""],
+["m1","Quale invenzione NON nasce nelle civiltà fluviali secondo il libro?",["La stampa","La scrittura","La ruota","Le prime religioni"],"Il libro cita scrittura, ruota, prime religioni e prime forme di potere."],
+["m2","Da quando è abitata la pianura mesopotamica?",["Almeno dal IX millennio a.C.","Dal 539 a.C.","Dal 2100 a.C.","Dal I secolo d.C."],""],
+["m2","Come aumentarono la fertilità del terreno?",["Con opere di canalizzazione dei fiumi","Con i concimi chimici","Bruciando i boschi","Spostandosi in montagna"],""],
+["m2","Quali due invenzioni aiutarono l'agricoltura?",["L'aratro e la ruota","Il mattone e la ruota","La scrittura e l'aratro","La vela e il carro"],"L'aratro rese il lavoro meno pesante, la ruota facilitò i trasporti."],
+["m2","Perché nacquero le città?",["Per gestire gli abbondanti prodotti agricoli","Per difendersi dagli animali","Per costruire le ziqqurat","Per fare le olimpiadi"],""],
+["m2","Come si chiama il passaggio dai villaggi alle città?",["Rivoluzione urbana","Rivoluzione agricola","Età dei metalli","Rinascimento"],""],
+["m3","Quali città avevano i Sumeri?",["Ur, Lagash e Uruk","Babilonia e Ninive","Roma e Atene","Mari e Susa"],""],
+["m3","Qual era la capitale dei Babilonesi?",["Babilonia","Ninive","Ur","Uruk"],""],
+["m3","Qual era la capitale degli Assiri?",["Ninive","Babilonia","Lagash","Persepoli"],""],
+["m3","Quando vissero i Sumeri?",["Dal 4000 al 1700 a.C.","Dal 2000 al 539 a.C.","Dal 1100 al 612 a.C.","Dal 604 al 562 a.C."],""],
+["m3","Quando dominarono i Babilonesi?",["Dal 2000 al 539 a.C.","Dal 4000 al 1700 a.C.","Dal 1100 al 612 a.C.","Dal 721 al 705 a.C."],""],
+["m3","Quando ci fu l'impero degli Assiri?",["Dal 1100 al 612 a.C.","Dal 4000 al 1700 a.C.","Dal 2000 al 539 a.C.","Dal 2900 al 2350 a.C."],""],
+["m4","Chi inventò la scrittura?",["I Sumeri","Gli Assiri","I Babilonesi","Gli Egizi"],"La scrittura segna il passaggio dalla preistoria alla storia."],
+["m4","Per quali due esigenze nacque la scrittura?",["Fare elenchi dei prodotti agricoli e condividere regole per le città","Scrivere poesie e lettere","Disegnare mappe e calendari","Decorare le ziqqurat"],""],
+["m4","Che cosa c'è scritto sulla Stele di Hammurabi?",["Una delle prime raccolte di leggi della storia","La storia della Torre di Babele","L'elenco dei re assiri","Una preghiera alla dea Ishtar"],""],
+["m4","In che materiale è la Stele di Hammurabi?",["Basalto","Argilla","Alabastro","Bronzo"],""],
+["m4","Che cosa vuol dire «cuneiforme»?",["A forma di cuneo","A forma di cerchio","Scritto su legno","Dipinto di blu"],""],
+["m4","Chi incontra Hammurabi nella parte alta della stele?",["Il dio del Sole","La dea Ishtar","Il re Sargon II","Un Lamassu"],""],
+["m4","Chi era Ishtar?",["La dea babilonese dell'amore e della guerra","Il dio sumero del Sole","Il dio della luna","Un re assiro"],""],
+["m4","Chi era Shamash?",["Il dio sumero del Sole","La dea dell'amore","Il re di Babilonia","Il dio della tempesta"],""],
+["m4","Che rapporto c'era tra religione e potere?",["Strettissimo: il re garantiva il favore degli dèi","Nessuno","I sacerdoti comandavano sui re","Il re era contro la religione"],""],
+["m5","Perché in Mesopotamia si inventò il mattone?",["Mancavano legno e pietra, ma c'era tanta argilla","Era più bello del marmo","Lo portavano gli Egizi","Serviva solo per le tombe"],""],
+["m5","Con che cosa si mescolava l'argilla per fare i mattoni?",["Sabbia e paglia tritata","Acqua e sale","Calce e marmo","Bitume e oro"],""],
+["m5","Che forma avevano i mattoni?",["Parallelepipedo","Cubo perfetto","Piramide","Cilindro"],"Si schiacciava l'argilla in cassette di legno."],
+["m5","Come diventò più resistente il mattone?",["Cuocendolo in forno","Lasciandolo sotto la pioggia","Dipingendolo","Mettendolo nel fiume"],"Prima si seccava al sole (crudo), poi si cuoceva (cotto)."],
+["m5","A che cosa servivano le grandi costruzioni mesopotamiche?",["A celebrare il potere dei sovrani e onorare gli dèi","Solo ad abitare","A fare commercio con l'Egitto","A osservare il mare"],""],
+["m6","Che cosa significa «ziqqurat»?",["Essere elevato","Casa del re","Porta del dio","Terra tra i fiumi"],""],
+["m6","Com'è fatta una ziqqurat?",["Da 3 a 8 gradoni a forma di tronchi di piramide","Una piramide liscia a punta","Una torre rotonda","Un cerchio di pietre"],""],
+["m6","Che cosa c'era in cima alla ziqqurat?",["Un tempio","La tomba del re","Un faro","Un giardino pensile"],"Era il luogo più vicino al cielo."],
+["m6","Dove erano le scale della ziqqurat?",["All'esterno","All'interno","Non c'erano scale","Sotto terra"],""],
+["m6","Perché la ziqqurat non aveva finestre?",["Per tenere freschi gli ambienti","Per paura dei ladri","Perché non sapevano farle","Per vedere meglio il cielo"],"Le aperture davano su cortili interni ombreggiati."],
+["m6","Chi costruì la ziqqurat di Ur?",["Il re sumero Ur-Nammu","Nabucodonosor II","Hammurabi","Sargon II"],"Intorno al 2100 a.C."],
+["m6","A quale dio era dedicata la ziqqurat di Ur?",["Al dio della luna Nannar","Alla dea Ishtar","Al dio del Sole Shamash","A Marduk"],""],
+["m7","Sotto quale re Babilonia raggiunse il massimo splendore?",["Nabucodonosor II","Hammurabi","Sargon II","Ur-Nammu"],"Regnò dal 604 al 562 a.C."],
+["m7","Quante torri e quante porte avevano le mura di Babilonia?",["250 torri e 8 porte","8 torri e 250 porte","100 torri e 4 porte","7 torri e 7 porte"],""],
+["m7","Che cosa sono i giardini pensili?",["Giardini coltivati su terrazze","Giardini appesi agli alberi","Giardini sotto terra","Giardini galleggianti sul fiume"],""],
+["m7","A chi era dedicata la Porta di Ishtar?",["Alla dea dell'amore e della guerra","Al dio della luna","Al re Nabucodonosor","Al dio del Sole"],""],
+["m7","Quali animali decoravano la Porta di Ishtar e la via delle processioni?",["Leoni, draghi e tori","Cavalli, aquile e serpenti","Leoni e cammelli","Pesci e uccelli"],""],
+["m7","Di che cosa era rivestita la Porta di Ishtar?",["Mattonelle invetriate","Lastre d'oro","Marmo bianco","Legno dipinto"],""],
+["m7","Dove si trova oggi la ricostruzione della Porta di Ishtar?",["Al Pergamonmuseum di Berlino","Al Louvre di Parigi","Al British Museum di Londra","In Iraq, a Babilonia"],""],
+["m7","Che cosa fa l'invetriatura alla terracotta?",["La rende impermeabile e brillante","La rende morbida","La colora di nero","La fa diventare pietra"],""],
+["m7","Dove portava la via delle processioni?",["A una grande ziqqurat","Al fiume Tigri","Alla tomba del re","Al mare"],""],
+["m8","Dove si racconta la storia della Torre di Babele?",["Nella Bibbia","Sulla Stele di Hammurabi","Nello Stendardo di Ur","In un poema greco"],""],
+["m8","Che cosa fece Dio secondo il racconto della Torre di Babele?",["Confuse le lingue degli uomini","Distrusse la torre con un fulmine","Fece crescere un giardino","Mandò un diluvio"],""],
+["m8","Che cosa spiega il mito della Torre di Babele?",["L'origine delle diverse lingue e culture","Come si fanno i mattoni","Perché c'è il Sole","Come nacque Babilonia"],"È anche una metafora dell'arroganza umana."],
+["m9","Chi realizzò le sculture mesopotamiche più antiche?",["I Sumeri","Gli Assiri","I Persiani","I Babilonesi"],""],
+["m9","Chi sono gli «oranti»?",["Uomini rappresentati in preghiera","Soldati in battaglia","Re seduti sul trono","Animali sacri"],""],
+["m9","Con quali materiali erano fatte le statuette sumere?",["Gesso, alabastro o terracotta","Bronzo e oro","Legno e avorio","Marmo e basalto"],""],
+["m9","Dove si mettevano le statuette degli oranti?",["Dentro i templi o nelle fondamenta degli edifici","Nelle case private","Sulle mura della città","Nel fiume"],""],
+["m9","Che cosa indicano gli occhi grandi e sbarrati degli oranti?",["Devozione e concentrazione nella preghiera","Paura della guerra","Rabbia","Sonno"],""],
+["m9","Che cosa indossa la Statua di orante?",["Un gonnellino a ciocche di lana","Un'armatura","Una tunica lunga dorata","Un copricapo con corna"],""],
+["m9","Chi raffigura forse la Statua di orante?",["Eannatum, re sumero di Lagash","Hammurabi","Nabucodonosor II","Naram-Sin"],""],
+["m10","Che cosa ci resta della pittura mesopotamica?",["Pochissimo, come i dipinti del Palazzo di Zimri-Lim a Mari","Moltissime pitture nelle grotte","Solo quadri su tela","Gli affreschi della ziqqurat di Ur"],""],
+["m10","Che cosa celebra la Stele di Naram-Sin?",["Il trionfo del re Naram-Sin sui Lullubi","Le leggi di Hammurabi","La costruzione di Babilonia","Un banchetto di corte"],""],
+["m10","Come si riconosce il re nella Stele di Naram-Sin?",["È più grande dei soldati e ha un copricapo con le corna","È seduto su un trono","È dipinto d'oro","È l'unico a cavallo"],"Le corna sono simbolo della sua natura divina."],
+["m10","Dove si svolge la battaglia della Stele di Naram-Sin?",["In montagna","Su un fiume","In una città","In mare"],"I Lullubi vivevano in montagna."],
+["m10","Che cosa indicano i due astri in alto sulla Stele di Naram-Sin?",["La protezione degli dèi sull'impresa","Che era notte","Il Sole e la Luna di Babilonia","Due città conquistate"],""],
+["m10","Che tipo di scultura è la Stele di Naram-Sin?",["Un bassorilievo","Una statua a tuttotondo","Un intarsio","Una pittura"],""],
+["m11","Che cosa sono i Lamassu?",["Creature alate con corpo di toro e testa umana","Leoni con la testa d'aquila","Draghi blu della Porta di Ishtar","Statuette in preghiera"],""],
+["m11","Quale re fece costruire il palazzo con i Lamassu?",["Il re assiro Sargon II","Nabucodonosor II","Ur-Nammu","Hammurabi"],""],
+["m11","Perché i Lamassu hanno 5 zampe?",["Per sembrare fermi visti di fronte e in movimento visti di lato","Perché erano animali veri","Per errore dello scultore","Per reggere il tetto"],""],
+["m11","Come è scolpita la testa del Lamassu?",["A tuttotondo","A bassorilievo","Dipinta","A intarsio"],"Il resto del corpo è in altorilievo."],
+["m11","Dove fu ritrovato lo Stendardo di Ur?",["In una tomba regale a Ur","In un tempio di Babilonia","Nel palazzo di Sargon II","Sotto la Porta di Ishtar"],""],
+["m11","Con quale tecnica è fatto lo Stendardo di Ur?",["L'intarsio","L'invetriatura","Il bassorilievo","La pittura a fresco"],""],
+["m11","Che cosa sono i lapislazzuli?",["Una pietra dura blu, rara e preziosa","Mattoni cotti","Conchiglie","Un tipo di legno"],""],
+["m11","Quali sono i due lati dello Stendardo di Ur?",["Guerra e pace","Giorno e notte","Estate e inverno","Re e regina"],""],
+["m11","Come sono rappresentate le figure nello Stendardo di Ur?",["Busto di fronte, gambe e testa di profilo","Tutte di spalle","Tutte di fronte","Solo di profilo"],""],
+["m11","Che cosa forse era lo Stendardo di Ur?",["Un vessillo, la cassa di uno strumento musicale o un contenitore","Una tomba","Una porta","Un tavolo"],"Gli storici non ne sono ancora sicuri."],
+["m12","Qual è lo scopo principale dell'arte mesopotamica?",["Celebrare il potere assoluto del sovrano","Divertire il popolo","Decorare le case dei contadini","Raccontare favole"],""],
+["m12","Che cosa raccontano i rilievi?",["Guerre, cacce e vita di corte","Solo paesaggi","Solo animali","Leggende greche"],""],
+["m12","Chi costruì il Palazzo di Persepoli?",["I Persiani, con il re Dario I","I Sumeri, con Ur-Nammu","Gli Assiri, con Sargon II","I Babilonesi, con Hammurabi"],""],
+["m12","Com'è il Fregio degli arcieri del Palazzo di Susa?",["Figure rigide, di profilo e ripetute uguali","Figure in movimento e tutte diverse","Un dipinto su tela","Una statua a tuttotondo"],""],
+["m12","Secondo le mappe, che cosa simboleggia il drago della Porta di Ishtar?",["Marduk, protettore della città","Adad, dio della tempesta","Il re Nabucodonosor","La dea Ishtar"],"Il toro invece era il simbolo di Adad."]
+],
+VF:[
+["Mesopotamia significa «terra tra i fiumi».",1,"",42],
+["La civiltà egizia nacque sulle rive del Tigri.",0,"La civiltà egizia nacque sul Nilo; sul Tigri e l'Eufrate le civiltà mesopotamiche.",42],
+["La ruota e l'aratro aiutarono l'agricoltura.",1,"",42],
+["Il passaggio dai villaggi alle città si chiama «rivoluzione urbana».",1,"",42],
+["La capitale degli Assiri era Babilonia.",0,"La capitale degli Assiri era Ninive; Babilonia era dei Babilonesi.",42],
+["Ur, Lagash e Uruk erano città dei Sumeri.",1,"",42],
+["La scrittura fu inventata dagli Assiri.",0,"La inventarono i Sumeri.",42],
+["La Stele di Hammurabi contiene una delle prime raccolte di leggi.",1,"",42],
+["La Stele di Hammurabi è scritta in caratteri cuneiformi.",1,"",42],
+["Ishtar era la dea dell'amore e della guerra.",1,"",42],
+["Shamash era il dio della luna.",0,"Shamash era il dio sumero del Sole. Il dio della luna era Nannar.",42],
+["In Mesopotamia c'era tanta pietra per costruire.",0,"Mancavano legno e pietra: per questo si usò l'argilla e nacque il mattone.",44],
+["Il mattone cotto in forno è più resistente di quello seccato al sole.",1,"",44],
+["La ziqqurat aveva tante finestre sulle pareti.",0,"Non aveva finestre: le aperture davano su cortili interni ombreggiati.",44],
+["In cima alla ziqqurat c'era un tempio.",1,"",44],
+["Le scale della ziqqurat erano interne.",0,"Le scale erano esterne.",44],
+["La ziqqurat di Ur fu costruita da Ur-Nammu per il dio della luna Nannar.",1,"",44],
+["Babilonia aveva mura con 250 torri e 8 porte.",1,"",45],
+["I giardini pensili erano coltivati su terrazze.",1,"",45],
+["La Porta di Ishtar è decorata con leoni, draghi e tori.",1,"",45],
+["La Porta di Ishtar si trova oggi al Louvre di Parigi.",0,"La ricostruzione si trova al Pergamonmuseum di Berlino.",45],
+["L'invetriatura rende la terracotta impermeabile e brillante.",1,"",45],
+["Nella Torre di Babele Dio confuse le lingue degli uomini.",1,"",45],
+["Le statuette degli oranti erano molto grandi, alte diversi metri.",0,"Erano piccole (la Statua di orante è alta 30 cm).",46],
+["Gli oranti hanno occhi grandi e sbarrati per mostrare devozione.",1,"",46],
+["Della pittura mesopotamica ci sono rimasti moltissimi esempi.",0,"Ce ne sono rimasti pochissimi, come i dipinti del Palazzo di Zimri-Lim a Mari.",46],
+["Nella Stele di Naram-Sin il re è più piccolo dei soldati.",0,"Il re è più grande degli altri, per mostrare la sua importanza.",46],
+["Il copricapo con le corna di Naram-Sin è simbolo della sua natura divina.",1,"",46],
+["I Lamassu hanno corpo di toro, ali e testa umana.",1,"",47],
+["I Lamassu hanno 4 zampe.",0,"Hanno 5 zampe: fermi visti di fronte, in movimento visti di lato.",47],
+["Lo Stendardo di Ur ha un lato di guerra e uno di pace.",1,"",47],
+["Lo Stendardo di Ur è decorato con la tecnica dell'invetriatura.",0,"È fatto con la tecnica dell'intarsio (lapislazzuli, conchiglie, calcare).",47],
+["Nello Stendardo di Ur le storie si leggono dal basso verso l'alto.",1,"",47]
+],
+CHI:[
+["Stele di Hammurabi",["Sono di basalto e risalgo al XVIII secolo a.C.","Su di me ci sono 8000 parole in caratteri cuneiformi.","Contengo una delle prime raccolte di leggi della storia."],42],
+["Ziqqurat di Ur",["Sono fatta di mattoni crudi dentro e cotti fuori.","Mi costruì il re Ur-Nammu intorno al 2100 a.C.","Sono dedicata al dio della luna Nannar."],44],
+["Porta di Ishtar",["Sono alta 14,75 m e vivo a Berlino.","Sono rivestita di mattonelle invetriate blu.","Sono la porta principale di Babilonia, dedicata alla dea dell'amore e della guerra."],45],
+["Torre di Babele",["Sono un edificio leggendario.","Di me parla la Bibbia.","Dio confuse le lingue di chi mi costruiva."],45],
+["Statua di orante",["Sono alta solo 30 cm e vivo a Houston.","Sono di alabastro, lapislazzuli e madreperla.","Ho le mani giunte, il gonnellino a ciocche e gli occhi grandi e sbarrati."],46],
+["Stele di Naram-Sin",["Sono alta 2 metri e vivo al Louvre.","Sono un bassorilievo con due astri in alto.","Racconto il trionfo di un re con le corna sul popolo dei Lullubi."],46],
+["Lamassu",["Sono di alabastro gessoso, alto più di 3 metri.","Proteggevo il palazzo del re assiro Sargon II.","Ho corpo di toro, ali, testa umana e 5 zampe."],47],
+["Stendardo di Ur",["Mi hanno trovato in una tomba regale.","Sono di legno con lapislazzuli, conchiglie e calcare.","Ho un lato della guerra e uno della pace."],47],
+["Palazzo di Persepoli",["Sono un grande palazzo reale.","Mi hanno costruito i Persiani.","Mi ha fatto costruire Dario I."],"scheda"],
+["Fregio degli arcieri",["Sono fatto di terracotta smaltata.","Vengo dal Palazzo di Susa.","Le mie figure sono rigide, di profilo e tutte uguali."],"scheda"]
+],
+ARTI:{bins:["Pittura","Scultura","Architettura"],items:[
+ ["Dipinti del Palazzo di Zimri-Lim a Mari",0],["Disegni geometrici",0],["Immagini simboliche",0],["Ce ne restano pochissimi esempi",0],
+ ["Statuette degli oranti",1],["Lamassu",1],["Stele di Naram-Sin",1],["Rilievi di caccia e di guerra",1],["Statuetta di Gudea",1],["Gonnellino a ciocche di lana",1],
+ ["Ziqqurat",2],["Porta di Ishtar",2],["Mura con 250 torri",2],["Giardini pensili",2],["Mattone cotto",2],["Palazzo di Persepoli",2],["Torre di Babele",2]]},
+SMISTA:[
+ {id:"popoli",t:"Sumeri, Babilonesi o Assiri?",bins:["Sumeri","Babilonesi","Assiri"],cls:["","e","b"],items:[
+  ["Ur, Lagash e Uruk",0],["Inventano la scrittura",0],["Dal 4000 al 1700 a.C.",0],["Ziqqurat di Ur",0],["Stendardo di Ur",0],["Statuetta dell'orante Eannatum",0],
+  ["Capitale Babilonia",1],["Dal 2000 al 539 a.C.",1],["Stele di Hammurabi",1],["Nabucodonosor II",1],["Porta di Ishtar",1],["Giardini pensili",1],
+  ["Capitale Ninive",2],["Dal 1100 al 612 a.C.",2],["Sargon II",2],["Lamassu",2],["Grandi statue protettrici dal IX secolo a.C.",2]]},
+ {id:"pace",t:"Stendardo di Ur: guerra o pace?",bins:["Lato della guerra","Lato della pace"],cls:["","e"],items:[
+  ["Una battaglia",0],["Carri da guerra trainati da animali",0],["Soldati nemici sottomessi al re",0],["Soldati in fila con le armi",0],["Prigionieri portati davanti al sovrano",0],
+  ["Il banchetto del re e della sua corte",1],["Servi che portano animali in dono",1],["Una festa con il re seduto",1],["Processione di servi con sacchi sulle spalle",1]]},
+ {id:"materiali",t:"Di che cosa è fatto?",bins:["Pietra","Mattoni / argilla","Materiali preziosi"],cls:["","e","b"],items:[
+  ["Stele di Hammurabi (basalto)",0],["Stele di Naram-Sin (arenaria)",0],["Lamassu (alabastro gessoso)",0],
+  ["Ziqqurat di Ur",1],["Porta di Ishtar",1],["Mura di Babilonia",1],["Fregio degli arcieri (terracotta smaltata)",1],
+  ["Stendardo di Ur (lapislazzuli e conchiglie)",2]]}
+]};
+
+/* ============ CAPITOLI ============ */
+const MASCOT_PRE=`<svg viewBox="0 0 80 80" aria-hidden="true"><path d="M20 70 Q40 58 60 70 L60 80 L20 80 Z" fill="#8A5A34" stroke="var(--ink)" stroke-width="2.5"/><path d="M26 66 l4 6 M36 64 l2 7 M46 64 l-1 7 M54 66 l-3 6" stroke="#5B3A20" stroke-width="2" stroke-linecap="round"/><circle cx="40" cy="44" r="20" fill="#E9BE96" stroke="var(--ink)" stroke-width="2.5"/><path d="M19 42 Q16 22 30 20 Q34 12 42 17 Q50 11 55 20 Q66 22 61 42 Q58 32 50 30 Q44 34 38 29 Q30 33 24 31 Q20 35 19 42Z" fill="#4A2E1A" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="33" cy="45" r="2.6" fill="var(--ink)"/><circle cx="47" cy="45" r="2.6" fill="var(--ink)"/><path d="M33 53 Q40 58 47 53" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/><path d="M25 49h5M50 49h5" stroke="var(--acc)" stroke-width="3" stroke-linecap="round"/></svg>`;
+// Nabu, lo scriba di Babilonia (mascotte originale): copricapo alto, barba a riccioli, stilo
+const MASCOT_MESO=`<svg viewBox="0 0 80 80" aria-hidden="true"><path d="M18 72 Q40 60 62 72 L62 80 L18 80 Z" fill="#2C4FA3" stroke="var(--ink)" stroke-width="2.5"/><path d="M22 74h36" stroke="#E0B45E" stroke-width="2.5"/><circle cx="40" cy="42" r="18" fill="#D9A77C" stroke="var(--ink)" stroke-width="2.5"/><path d="M24 30 Q24 12 40 12 Q56 12 56 30 Z" fill="#E0B45E" stroke="var(--ink)" stroke-width="2.4" stroke-linejoin="round"/><path d="M25 25h30" stroke="var(--ink)" stroke-width="2"/><path d="M25 47 Q24 66 40 68 Q56 66 55 47 Q50 54 40 54 Q30 54 25 47Z" fill="#2A1F18" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><path d="M31 58 q2 2 4 0 q2 2 4 0 q2 2 4 0 q2 2 4 0" fill="none" stroke="#6B5E54" stroke-width="1.6"/><circle cx="33" cy="40" r="2.6" fill="var(--ink)"/><circle cx="47" cy="40" r="2.6" fill="var(--ink)"/><path d="M35 49 Q40 52 45 49" fill="none" stroke="#F2EAE2" stroke-width="2.2" stroke-linecap="round"/><path d="M64 44 L70 30" stroke="#8A5A34" stroke-width="3" stroke-linecap="round"/><path d="M68 34 l4 -2" stroke="var(--ink)" stroke-width="2"/></svg>`;
+const LOGO_PRE='<g stroke="var(--paper)" stroke-width="4.6" stroke-linecap="round" fill="none"><path d="M14 22v-8M19.5 20V9M25 20V8.5M30.5 21v-9"/><path d="M36 26l-3.5-5.5"/></g><path d="M12 22c0 9 4 15 11 15s10-4 11-10l-2-6H12z" fill="var(--paper)"/>';
+const LOGO_MESO='<g fill="var(--paper)"><rect x="9" y="31" width="28" height="6" rx="1"/><rect x="13" y="24" width="20" height="6" rx="1"/><rect x="17" y="17" width="12" height="6" rx="1"/><rect x="20" y="10" width="6" height="6" rx="1"/></g><path d="M23 37V17" stroke="var(--acc)" stroke-width="2.4"/>';
+const CAPS={
+ pre:{id:"pre",nome:"Preistoria",cap:"Capitolo 1",data:CAP_PRE,key:"arte-teto-preistoria-v1",sub:"L'arte della Preistoria · verifica",
+  who:"UGO",mascot:MASCOT_PRE,logo:LOGO_PRE,quizT:"Quiz della caverna",ranksT:"I gradi della tribù",
+  intro:"Ciao Teto! Qui c'è tutto quello che serve per la verifica, diviso come nel libro (<b>capitolo 1, pagine 24–38</b>). Tocca un argomento per aprirlo e premi l'altoparlante per ascoltarlo.",
+  tlNote:"Le date dorate sono le più importanti. Trucco: a.C. si conta all'indietro (10.000 a.C. viene prima del 6000 a.C.).",
+  ranks:[["Cucciolo di caverna",0],["Cacciatore",150],["Pittore di grotte",400],["Scultore di Veneri",800],["Costruttore di dolmen",1300],["Capo del villaggio",2000]],
+  giochi:[{id:"ere",t:"Che periodo è?",d:"Paleolitico, Neolitico o Età dei metalli",i:"line",c:"e",sm:0},{id:"mdc",t:"Menhir, dolmen o cromlech?",d:"Le tre tipologie di megaliti",i:"col",c:"b",sm:1}]},
+ meso:{id:"meso",nome:"Mesopotamia",cap:"Capitolo 2",data:CAP_MESO,key:"arte-teto-mesopotamia-v1",sub:"L'arte della Mesopotamia · verifica",
+  who:"NABU",mascot:MASCOT_MESO,logo:LOGO_MESO,quizT:"Quiz della ziqqurat",ranksT:"I gradi di Babilonia",
+  intro:"Ciao Teto, sono Nabu lo scriba! Qui c'è tutto sull'<b>arte della Mesopotamia</b> (libro, <b>capitolo 2, pagine 42–47</b>), più un ripasso dalle mappe e dalle schede. Tocca un argomento per aprirlo e premi l'altoparlante per ascoltarlo.",
+  tlNote:"Le date dorate sono le più importanti. Ricorda: a.C. si conta all'indietro, quindi 2550 a.C. viene prima del 2100 a.C.",
+  ranks:[["Impastatore di mattoni",0],["Scriba",150],["Scultore di oranti",400],["Architetto di ziqqurat",800],["Guardiano Lamassu",1300],["Re di Babilonia",2000]],
+  giochi:[{id:"popoli",t:"Sumeri, Babilonesi o Assiri?",d:"A quale popolo appartiene?",i:"who",c:"e",sm:0},{id:"pace",t:"Guerra o pace?",d:"I due lati dello Stendardo di Ur",i:"col",c:"b",sm:1},{id:"materiali",t:"Di che cosa è fatto?",d:"Pietra, mattoni o materiali preziosi",i:"sort",sm:2}]}
+};
+let CAP;
+try{CAP=CAPS[localStorage.getItem("arte-teto-cap")]}catch(e){}
+if(!CAP)CAP=CAPS.meso;
+
+/* ============ STATO ============ */
+let KEY,S,RANKS,GAMES;
+function useCap(c){
+ CAP=c;({SEZ,OPERE,EV,ERE,PAROLE,QS,VF,CHI,ARTI,SMISTA}=c.data);KEY=c.key;RANKS=c.ranks;
+ S={pts:0,best:{},err:{},ok:{},giocate:0,timer:false};
+ try{const s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s) S=Object.assign(S,s);}catch(e){}
+ try{localStorage.setItem("arte-teto-cap",c.id)}catch(e){}
+ document.documentElement.dataset.cap=c.id;
+ GAMES=[
+  {id:"quiz",t:c.quizT,d:"10 domande a scelta, su tutto o su un argomento",i:"q",run:()=>quizPick()},
+  {id:"vf",t:"Vero o falso",d:"Decidi in fretta: è giusto o sbagliato?",i:"vf",c:"e",run:()=>startVF()},
+  {id:"chi",t:"Che opera sono?",d:"Indovina l'opera dagli indizi",i:"who",c:"b",run:()=>startChi()},
+  {id:"linea",t:"Linea del tempo",d:"Metti gli eventi in ordine",i:"line",run:()=>startLinea()},
+  {id:"anno",t:"Che anno è?",d:"Abbina ogni evento alla sua data",i:"cal",c:"b",run:()=>startAnno()},
+  {id:"parole",t:"Parole e significati",d:"Collega ogni parola al suo significato",i:"pair",c:"e",run:()=>startParole()},
+  {id:"arti",t:"Pittura, scultura o architettura?",d:"Smista opere e tecniche nella sezione giusta",i:"sort",run:()=>startSmista({id:"arti",t:"Pittura, scultura o architettura?",bins:ARTI.bins,cls:["","b","e"],items:ARTI.items})},
+  ...c.giochi.map(g=>Object.assign({},g,{run:()=>startSmista(SMISTA[g.sm])}))];
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function rank(){let r=0;RANKS.forEach((x,i)=>{if(S.pts>=x[1])r=i});return r}
+function addPts(n){const before=rank();S.pts+=n;save();head();return rank()>before}
+
+/* ============ UTIL ============ */
+const $=s=>document.querySelector(s);
+const app=$("#app");
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\*(.+?)\*/g,"<em>$1</em>").replace(/\[(.+?)\]/g,'<span class="d">$1</span>');
+const plain=s=>s.replace(/\*\*|\*|\[|\]/g,"");
+const sezOf=id=>SEZ.find(s=>s.id===id);
+const ICON={
+ spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor" stroke="none"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>',
+ book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1z"/><path d="M12 6v14"/></svg>',
+ dice:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="16" cy="16" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>',
+ scroll:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a3 3 0 0 1-3-3V5"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>',
+ laurel:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 21c-5-2-8-6-8-12M12 21c5-2 8-6 8-12"/><path d="M5 12c2 0 3 1 3 3M4 8c2 0 3 1 3 3M19 12c-2 0-3 1-3 3M20 8c-2 0-3 1-3 3"/></svg>',
+ q:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 1-1 1.7M12 17h.01"/></svg>',
+ vf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12l3 3 5-6M15 9l6 6M21 9l-6 6"/></svg>',
+ line:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><circle cx="6" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="18" cy="12" r="2" fill="currentColor"/></svg>',
+ cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+ who:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>',
+ pair:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="7" height="6" rx="2"/><rect x="14" y="14" width="7" height="6" rx="2"/><path d="M10 7h4v10"/></svg>',
+ sort:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16l-6 8v6l-4 2v-8z"/></svg>',
+ col:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21h16M5 7h14M12 3l8 4H4z"/><path d="M7 7v14M12 7v14M17 7v14"/></svg>',
+ redo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v5h5"/></svg>',
+ star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg>',
+ left:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
+ chev:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>'
+};
+const marco=(t)=>`<div class="marco">${CAP.mascot}<div class="bubble"><span class="who">${CAP.who}</span>${t}</div></div>`;
+const PG=p=>typeof p==="number"?"pag. "+p:p;
+
+/* lettura ad alta voce */
+let voice=null;
+function pickVoice(){try{const v=speechSynthesis.getVoices();voice=v.find(x=>/it[-_]IT/i.test(x.lang)&&/Alice|Federica|Emma|Google/i.test(x.name))||v.find(x=>/^it/i.test(x.lang))||null}catch(e){}}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(plain(t).replace(/a\.C\./g,"avanti Cristo").replace(/d\.C\./g,"dopo Cristo").replace(/–/g," - "));u.lang="it-IT";if(voice)u.voice=voice;u.rate=.92;speechSynthesis.speak(u)}catch(e){}}
+const spkBtn=t=>`<button class="speak" aria-label="Leggi ad alta voce" data-say="${esc(t)}">${ICON.spk}</button>`;
+document.addEventListener("click",e=>{const b=e.target.closest("[data-say]");if(b)speak(b.dataset.say)});
+
+/* ============ TESTATA & TAB ============ */
+let TAB="studia";
+try{TAB=sessionStorage.getItem("at-tab")||"studia"}catch(e){}
+function head(){const g=$("#grade");if(!g)return;const r=rank();g.innerHTML=`<span class="dot">${r+1}</span><b>${RANKS[r][0]}</b><span class="pts">${S.pts} punti</span>`}
+function shell(){
+ app.innerHTML=`<div class="top"><div class="brand"><svg width="46" height="46" viewBox="0 0 46 46" aria-hidden="true"><rect width="46" height="46" rx="12" fill="var(--acc)"/>${CAP.logo}</svg><div><h1>L'Arte di <span>Teto</span></h1><small>${CAP.sub}</small></div></div><div class="grade" id="grade"></div></div>
+ <nav class="capsw" id="capsw" aria-label="Capitolo">${Object.values(CAPS).map(c=>`<button data-cap="${c.id}" aria-current="${CAP===c}"><small>${c.cap}</small>${c.nome}</button>`).join("")}</nav>
+ <div class="frieze"></div>
+ <nav class="tabs" id="tabs">${[["studia","Studia","book"],["giochi","Giochi","dice"],["verifica","Verifica","scroll"],["prog","Progressi","laurel"]].map(([k,l,i])=>`<button data-tab="${k}" aria-current="${TAB===k}">${ICON[i]}${l}</button>`).join("")}</nav>
+ <main id="main" class="wrap" style="gap:16px"></main>`;
+ head();
+ $("#capsw").onclick=e=>{const b=e.target.closest("[data-cap]");if(!b||CAPS[b.dataset.cap]===CAP)return;try{speechSynthesis.cancel()}catch(e){};useCap(CAPS[b.dataset.cap]);SUB="riassunto";confirmReset=false;shell()};
+ $("#tabs").onclick=e=>{const b=e.target.closest("[data-tab]");if(!b)return;TAB=b.dataset.tab;try{sessionStorage.setItem("at-tab",TAB)}catch(e){}try{speechSynthesis.cancel()}catch(e){};shell()};
+ ({studia,giochi,verifica:verificaHome,prog})[TAB]();
+}
+const M=()=>$("#main");
+
+/* ============ STUDIA ============ */
+let SUB="riassunto";
+function studia(){
+ M().innerHTML=marco(CAP.intro)+
+ `<div class="subtabs" id="sub">${[["riassunto","Riassunto"],["opere","Le opere"],["tempo","Linea del tempo"],["parole","Parole difficili"]].map(([k,l])=>`<button data-s="${k}" aria-current="${SUB===k}">${l}</button>`).join("")}</div><div id="sb" style="display:flex;flex-direction:column;gap:10px"></div>`;
+ $("#sub").onclick=e=>{const b=e.target.closest("[data-s]");if(b){SUB=b.dataset.s;studia()}};
+ const sb=$("#sb");
+ if(SUB==="riassunto"){
+  sb.innerHTML=SEZ.map((s,i)=>`<details class="sez"${i===0?" open":""}><summary><span class="pg">${typeof s.p==="number"?"p. "+s.p:s.p}${s.p2?"–"+s.p2:""}</span><span class="tt">${esc(s.t)}</span><span class="chev">${ICON.chev}</span></summary><div class="body"><ul>${s.punti.map(p=>`<li>${md(p)}</li>`).join("")}</ul><div class="row"><button class="btn small ghost" data-say="${esc(s.t+". "+s.punti.join(" "))}">${ICON.spk} Ascolta</button><button class="btn small" data-quiz="${s.id}">${ICON.q} Quiz su questo</button></div></div></details>`).join("");
+  sb.onclick=e=>{const b=e.target.closest("[data-quiz]");if(b){e.preventDefault();startQuiz(b.dataset.quiz)}};
+ }else if(SUB==="tempo"){
+  let html='<div class="tl">';
+  EV.forEach(ev=>{ const er=ERE.find(x=>x[0]===ev[0]); if(er) html+=`<div class="era">${er[1]}</div>`;
+   html+=`<div class="ev${ev[4]?" big":""}"><b>${ev[1]}</b><span>${esc(ev[2])} <span class="pag" style="color:var(--muted)">${PG(ev[3])}</span></span></div>`});
+  sb.innerHTML=html+`</div><p class="note">${CAP.tlNote}</p>`;
+ }else if(SUB==="opere"){
+  sb.innerHTML=`<div class="gloss">${OPERE.map(o=>`<div class="word"><b>${esc(o[0])}</b><span><span class="d" style="background:var(--bronze-soft);color:var(--bronze);border-radius:6px;padding:0 5px;font-weight:700">${esc(o[1])}</span><br>${esc(o[2])}<br>${esc(o[3])}</span><i>${typeof o[4]==="number"?"pagina "+o[4]:o[4]}</i></div>`).join("")}</div><p class="note">Per la verifica: impara <b>nome</b>, <b>data</b>, <b>materiale</b> e <b>dove si trova</b>. Allenati con il gioco «Che opera sono?».</p>`;
+ }else{
+  sb.innerHTML=`<div class="gloss">${PAROLE.map(w=>`<div class="word"><b>${esc(w[0])}</b><span>${esc(w[1])}</span><i>${typeof w[2]==="number"?"pagina "+w[2]:w[2]}</i></div>`).join("")}</div>`;
+ }
+}
+
+/* ============ GIOCHI ============ */
+function giochi(){
+ const nErr=Object.keys(S.err).length;
+ M().innerHTML=marco("Scegli un gioco! Ogni risposta giusta vale punti. Se sbagli hai una <b>seconda possibilità</b>, poi ti mostro la risposta e la pagina dove ripassare.")+
+ `<div class="games">${nErr?`<button class="game star" data-g="errori"><span class="ic">${ICON.redo}</span><b>Ripassa i tuoi errori</b><span>${nErr} domand${nErr===1?"a":"e"} da sistemare</span></button>`:""}${GAMES.map(g=>`<button class="game ${g.c||""}" data-g="${g.id}"><span class="ic">${ICON[g.i]}</span><b>${g.t}</b><span>${g.d}</span>${S.best[g.id]!=null?`<span class="best">Record: ${S.best[g.id]}</span>`:""}</button>`).join("")}</div>`;
+ M().onclick=e=>{const b=e.target.closest("[data-g]");if(!b)return;if(b.dataset.g==="errori")return startErrori();GAMES.find(g=>g.id===b.dataset.g).run()};
+}
+function playShell(title,back){
+ M().onclick=null;
+ M().innerHTML=`<div class="play"><div class="phead"><button class="back" id="back">${ICON.left} Esci</button><h2>${esc(title)}</h2></div><div class="prog"><i id="pr" style="width:0"></i></div><div id="stage" class="play"></div></div>`;
+ $("#back").onclick=()=>{try{speechSynthesis.cancel()}catch(e){};clearInterval(TIMER);(back||shell)()};
+ return $("#stage");
+}
+const setProg=f=>{const p=$("#pr");if(p)p.style.width=Math.round(f*100)+"%"};
+function record(id,score){S.giocate++;if(S.best[id]==null||score>S.best[id])S.best[id]=score;save()}
+function endScreen(stage,{score,max,id,msg,extra="",again}){
+ setProg(1);record(id,score);
+ const f=score/max;
+ const m=msg||(f>=.9?"Fantastico, sei pronto per la verifica!":f>=.7?"Molto bene! Ancora un ripasso e sei perfetto.":f>=.5?"Buon lavoro! Riprova per migliorare.":"Niente paura: ripassa il riassunto e riprova.");
+ stage.innerHTML=`<div class="qbox end"><div class="score">${score}/${max}</div>${marco(m)}${extra}<div class="row" style="justify-content:center"><button class="btn" id="again">${ICON.redo} Gioca ancora</button><button class="btn ghost" id="toG">Altri giochi</button></div></div>`;
+ $("#again").onclick=again;$("#toG").onclick=()=>{TAB="giochi";shell()};
+}
+
+/* --- motore domande a scelta (quiz, errori, che anno) --- */
+let TIMER=null;
+function runMC({id,title,items,back,vf=false}){
+ const st=playShell(title,back);let i=0,score=0,pts=0,tries=0;
+ const next=()=>{
+  if(i>=items.length){
+   return endScreen(st,{score,max:items.length,id,again:()=>GAMES.find(g=>g.id===id)?GAMES.find(g=>g.id===id).run():startErrori(),extra:`<p>Hai guadagnato <b>${pts}</b> punti.</p>`});
+  }
+  setProg(i/items.length);tries=0;
+  const it=items[i];
+  const opts=vf?["Vero","Falso"]:shuf(it.opts);
+  st.innerHTML=`<div class="qbox"><div class="meta"><span>Domanda ${i+1} di ${items.length}</span><span>${it.pag?PG(it.pag):""}</span></div>${S.timer&&vf?'<div class="prog"><i id="tm" style="width:100%;background:var(--bronze)"></i></div>':""}<div class="qline"><div class="q">${esc(it.q)}</div>${spkBtn(it.q)}</div><div class="${vf?"vf":"opts"}">${opts.map(o=>`<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div><div id="fb"></div></div>`;
+  if(S.timer&&vf){let t=10;clearInterval(TIMER);TIMER=setInterval(()=>{t-=.1;const b=$("#tm");if(b)b.style.width=Math.max(0,t*10)+"%";if(t<=0){clearInterval(TIMER);tries=1;answer(null)}},100)}
+  st.querySelector("."+(vf?"vf":"opts")).onclick=e=>{const b=e.target.closest(".opt");if(!b||b.disabled)return;answer(b)};
+ };
+ const answer=(b)=>{
+  const it=items[i];const fb=$("#fb");
+  if(b&&b.dataset.o===it.ok){
+   clearInterval(TIMER);
+   b.classList.add("ok");st.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+   const g=tries===0?10:5;pts+=g;if(tries===0)score++;
+   if(tries===0&&it.key){delete S.err[it.key];S.ok[it.key]=1}
+   const up=addPts(g);
+   fb.innerHTML=`<div class="fb ok"><b>Giusto! +${g}</b>${it.exp?`<p>${esc(it.exp)}</p>`:""}${up?`<p><b>Sei salito di grado: ${RANKS[rank()][0]}!</b></p>`:""}</div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Avanti</button></div>`;
+   $("#nx").onclick=()=>{i++;next()};
+  }else if(tries===0&&b){
+   tries=1;b.classList.add("ko");b.disabled=true;
+   fb.innerHTML=`<div class="fb hint"><b>Quasi! Riprova, hai un'altra possibilità.</b></div>`;
+  }else{
+   clearInterval(TIMER);
+   if(b)b.classList.add("ko");
+   st.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.dataset.o===it.ok)x.classList.add("ok")});
+   if(it.key){S.err[it.key]=(S.err[it.key]||0)+1;save()}
+   fb.innerHTML=`<div class="fb ko"><b>${b?"La risposta giusta è":"Tempo scaduto! Era"}: ${esc(it.ok)}</b><span class="pag">ripassa ${PG(it.pag)}</span>${it.exp?`<p>${esc(it.exp)}</p>`:""}</div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Avanti</button></div>`;
+   $("#nx").onclick=()=>{i++;next()};
+  }
+ };
+ next();
+}
+const qItem=(q)=>({key:"Q|"+q[1],q:q[1],ok:q[2][0],opts:q[2],pag:sezOf(q[0]).p,exp:q[3],sez:q[0]});
+const vfItem=(v)=>({key:"V|"+v[0],q:v[0],ok:v[1]?"Vero":"Falso",pag:v[3],exp:v[1]?"":"Correzione: "+v[2]});
+
+function quizPick(){
+ const st=playShell(CAP.quizT);
+ st.innerHTML=`<div class="qbox">${marco("Su cosa vuoi allenarti?")}<div class="games"><button class="game star" data-s="all"><b>Tutto il programma</b><span>10 domande a sorpresa</span></button>${SEZ.map(s=>`<button class="game" data-s="${s.id}"><b style="font-size:17px">${esc(s.t)}</b><span>${PG(s.p)} · ${QS.filter(q=>q[0]===s.id).length} domande</span></button>`).join("")}</div></div>`;
+ st.onclick=e=>{const b=e.target.closest("[data-s]");if(b)startQuiz(b.dataset.s)};
+}
+function startQuiz(sez){
+ TAB="giochi";if($("#tabs"))shell();
+ const pool=sez==="all"?QS:QS.filter(q=>q[0]===sez);
+ const t=sez==="all"?CAP.quizT:sezOf(sez).t;
+ runMC({id:"quiz",title:t,items:shuf(pool).slice(0,10).map(qItem),back:quizPick});
+}
+function startVF(){
+ const st=playShell("Vero o falso");
+ st.innerHTML=`<div class="qbox">${marco("12 frasi: vero o falso? Puoi giocare con il <b>timer</b> (10 secondi per frase) oppure con calma.")}<label class="toggle"><input type="checkbox" id="tmr" ${S.timer?"checked":""}> Gioca con il timer</label><div class="row"><button class="btn" id="go">Inizia</button></div></div>`;
+ $("#tmr").onchange=e=>{S.timer=e.target.checked;save()};
+ $("#go").onclick=()=>runMC({id:"vf",title:"Vero o falso",vf:true,items:shuf(VF).slice(0,12).map(vfItem)});
+}
+function startAnno(){
+ const evs=shuf(EV).slice(0,10);
+ runMC({id:"anno",title:"Che anno è?",items:evs.map(ev=>{
+  const near=shuf(EV.filter(x=>x!==ev).sort((a,b)=>Math.abs(a[0]-ev[0])-Math.abs(b[0]-ev[0])).slice(0,6)).slice(0,3);
+  return {key:"A|"+ev[2],q:ev[2],ok:ev[1],opts:[ev[1],...near.map(x=>x[1])],pag:ev[3],exp:""}})});
+}
+function startErrori(){
+ const keys=shuf(Object.keys(S.err)).slice(0,10);
+ const items=keys.map(k=>{const [t,txt]=[k.slice(0,1),k.slice(2)];
+  if(t==="Q"){const q=QS.find(x=>x[1]===txt);return q&&qItem(q)}
+  if(t==="V"){const v=VF.find(x=>x[0]===txt);return v&&Object.assign(vfItem(v),{opts:["Vero","Falso"]})}
+  if(t==="A"){const ev=EV.find(x=>x[2]===txt);if(!ev)return null;const near=shuf(EV.filter(x=>x!==ev)).slice(0,3);return {key:k,q:ev[2],ok:ev[1],opts:[ev[1],...near.map(x=>x[1])],pag:ev[3],exp:""}}
+ }).filter(Boolean);
+ if(!items.length){TAB="giochi";return shell()}
+ runMC({id:"errori",title:"Ripassa i tuoi errori",items});
+}
+
+/* --- Chi sono? --- */
+function startChi(){
+ const st=playShell("Che opera sono?");const list=shuf(CHI).slice(0,8);let i=0,score=0,pts=0;
+ const next=()=>{
+  if(i>=list.length)return endScreen(st,{score,max:list.length,id:"chi",again:startChi,extra:`<p>Hai guadagnato <b>${pts}</b> punti.</p>`});
+  setProg(i/list.length);
+  const c=list[i];let shown=1;
+  const opts=shuf([c[0],...shuf(CHI.filter(x=>x!==c)).slice(0,3).map(x=>x[0])]);
+  const draw=(done)=>{
+   st.innerHTML=`<div class="qbox"><div class="meta"><span>Opera ${i+1} di ${list.length}</span><span>Vale ${[15,10,5][shown-1]} punti</span></div><ol class="clues">${c[1].map((t,k)=>k<shown||done?`<li><b>${k+1}</b>${esc(t)}</li>`:`<li class="hid">Indizio ${k+1} nascosto</li>`).join("")}</ol><div class="row">${spkBtn(c[1].slice(0,done?3:shown).join(" "))}</div><div class="opts">${opts.map(o=>`<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div><div id="fb"></div></div>`;
+  };
+  draw(false);
+  st.onclick=e=>{const b=e.target.closest(".opt");if(!b||b.disabled)return;
+   if(b.dataset.o===c[0]){
+    const g=[15,10,5][shown-1];pts+=g;score++;addPts(g);
+    draw(true);st.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.dataset.o===c[0])x.classList.add("ok")});
+    $("#fb").innerHTML=`<div class="fb ok"><b>Esatto: ${esc(c[0])}! +${g}</b></div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Avanti</button></div>`;
+    $("#nx").onclick=()=>{i++;next()};
+   }else if(shown<3){
+    shown++;draw(false);
+    st.querySelectorAll(".opt").forEach(x=>{if(x.dataset.o===b.dataset.o){x.classList.add("ko");x.disabled=true}});
+    $("#fb").innerHTML=`<div class="fb hint"><b>No! Ecco un altro indizio.</b></div>`;
+   }else{
+    draw(true);st.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.dataset.o===c[0])x.classList.add("ok")});
+    $("#fb").innerHTML=`<div class="fb ko"><b>Era ${esc(c[0])}</b><span class="pag">ripassa ${PG(c[2])}</span></div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Avanti</button></div>`;
+    $("#nx").onclick=()=>{i++;next()};
+   }};
+ };
+ next();
+}
+
+/* --- Linea del tempo --- */
+function startLinea(){
+ const st=playShell("Linea del tempo");let round=0,score=0,errs=0;const R=3;
+ const play=()=>{
+  if(round>=R)return endScreen(st,{score,max:R*5,id:"linea",again:startLinea,extra:`<p>Errori: <b>${errs}</b></p>`});
+  setProg(round/R);
+  const set=shuf(EV).slice(0,5);const sorted=set.slice().sort((a,b)=>a[0]-b[0]);let k=0,miss=0;
+  const draw=()=>{
+   st.innerHTML=`<div class="qbox"><div class="meta"><span>Giro ${round+1} di ${R}</span><span>Tocca dal più antico al più recente</span></div><div class="placed">${sorted.slice(0,k).map(ev=>`<div><b>${ev[1]}</b><span>${esc(ev[2])}</span></div>`).join("")}</div><div class="chips">${set.filter(ev=>sorted.indexOf(ev)>=k).map(ev=>`<button class="chip" data-e="${EV.indexOf(ev)}">${esc(ev[2])}</button>`).join("")}</div><div id="fb"></div></div>`;
+  };
+  draw();
+  st.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const ev=EV[+b.dataset.e];
+   if(ev===sorted[k]){k++;if(miss===0)score++;miss=0;addPts(5);draw();
+    if(k===5){$("#fb").innerHTML=`<div class="fb ok"><b>Linea completata!</b></div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Avanti</button></div>`;$("#nx").onclick=()=>{round++;play()}}
+   }else{miss++;errs++;b.classList.remove("ko");void b.offsetWidth;b.classList.add("ko");
+    $("#fb").innerHTML=`<div class="fb hint">Non ancora: c'è un evento più antico. ${miss>=2?`Suggerimento: cerca «${esc(sorted[k][2])}».`:""}</div>`}};
+ };
+ play();
+}
+
+/* --- Parole e significati --- */
+function startParole(){
+ const st=playShell("Parole e significati");let round=0,score=0,errs=0;const R=3;
+ const play=()=>{
+  if(round>=R)return endScreen(st,{score,max:R*5,id:"parole",again:startParole,extra:`<p>Errori: <b>${errs}</b></p>`});
+  setProg(round/R);
+  const set=shuf(PAROLE).slice(0,5);const L=shuf(set),Rr=shuf(set);let sel=null,done=0,missed=new Set();
+  st.innerHTML=`<div class="qbox"><div class="meta"><span>Giro ${round+1} di ${R}</span><span>Tocca una parola, poi il suo significato</span></div><div class="match"><div class="col" id="cl">${L.map(w=>`<button class="chip" data-w="${esc(w[0])}">${esc(w[0])}</button>`).join("")}</div><div class="col" id="cr">${Rr.map(w=>`<button class="chip" data-d="${esc(w[0])}">${esc(w[1])}</button>`).join("")}</div></div><div id="fb"></div></div>`;
+  st.onclick=e=>{const b=e.target.closest(".chip");if(!b||b.classList.contains("done"))return;
+   if(b.dataset.w){st.querySelectorAll("[data-w]").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");sel=b;speak(b.dataset.w);return}
+   if(!sel){$("#fb").innerHTML='<div class="fb hint">Prima tocca una parola a sinistra.</div>';return}
+   if(b.dataset.d===sel.dataset.w){b.classList.add("done");sel.classList.remove("sel");sel.classList.add("done");if(!missed.has(sel.dataset.w))score++;sel=null;done++;addPts(5);$("#fb").innerHTML="";
+    if(done===5){$("#fb").innerHTML=`<div class="fb ok"><b>Tutte collegate!</b></div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Avanti</button></div>`;$("#nx").onclick=()=>{round++;play()}}
+   }else{errs++;missed.add(sel.dataset.w);b.classList.remove("ko");void b.offsetWidth;b.classList.add("ko")}};
+ };
+ play();
+}
+
+/* --- Smista --- */
+function startSmista(cfg){
+ const st=playShell(cfg.t);const items=shuf(cfg.items);let i=0,score=0,miss=false;
+ const cols=cfg.bins.length>2?(cfg.bins.length===5?"repeat(auto-fit,minmax(140px,1fr))":"1fr 1fr 1fr"):"1fr 1fr";
+ const next=()=>{
+  if(i>=items.length)return endScreen(st,{score,max:items.length,id:cfg.id,again:()=>startSmista(cfg)});
+  setProg(i/items.length);miss=false;
+  st.innerHTML=`<div class="qbox"><div class="meta"><span>${i+1} di ${items.length}</span><span>In quale gruppo va?</span></div><div class="card1">${esc(items[i][0])}</div><div class="bins" style="grid-template-columns:${cols}">${cfg.bins.map((b,k)=>`<button class="bin ${cfg.cls[k]||""}" data-b="${k}">${esc(b)}</button>`).join("")}</div><div id="fb"></div></div>`;
+ };
+ st.onclick=e=>{const b=e.target.closest(".bin");if(!b||b.disabled)return;const k=+b.dataset.b;
+  if(k===items[i][1]){b.classList.add("ok");st.querySelectorAll(".bin").forEach(x=>x.disabled=true);if(!miss){score++;addPts(5)}
+   setTimeout(()=>{i++;next()},650)}
+  else if(!miss){miss=true;b.classList.add("ko");b.disabled=true;$("#fb").innerHTML='<div class="fb hint">Riprova!</div>'}
+  else{b.classList.add("ko");st.querySelectorAll(".bin").forEach(x=>{x.disabled=true;if(+x.dataset.b===items[i][1])x.classList.add("ok")});
+   $("#fb").innerHTML=`<div class="fb ko">Va in <b>${esc(cfg.bins[items[i][1]])}</b>.</div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Avanti</button></div>`;$("#nx").onclick=()=>{i++;next()}}};
+ next();
+}
+
+/* ============ VERIFICA ============ */
+function verificaHome(){
+ const last=S.best.verifica;
+ M().innerHTML=marco("Questa è una <b>prova generale</b> della verifica: 20 domande su tutto il capitolo, una sola possibilità per domanda, e alla fine il voto in decimi. Prenditi il tuo tempo!")+
+ `<div class="panel" style="display:flex;flex-direction:column;gap:12px"><div class="secLabel">Simulazione di verifica <small>20 domande · nessun timer</small></div><p style="margin:0">Dentro ci sono: 12 domande a scelta, 5 vero o falso e 3 date. Alla fine vedi gli errori con la pagina da ripassare.</p>${last!=null?`<p class="note" style="margin:0">Voto migliore finora: <b>${last}</b></p>`:""}<div class="row"><button class="btn" id="vgo">${ICON.scroll} Inizia la verifica</button></div></div>`;
+ $("#vgo").onclick=startVerifica;
+}
+function startVerifica(){
+ const st=playShell("Prova di verifica",()=>{TAB="verifica";shell()});
+ // una domanda per argomento il più possibile, poi casuali
+ const bySez=shuf(SEZ).map(s=>shuf(QS.filter(q=>q[0]===s.id))[0]);
+ const qs=bySez.slice(0,12).map(qItem);
+ const vfs=shuf(VF).slice(0,5).map(v=>Object.assign(vfItem(v),{opts:["Vero","Falso"],vf:1}));
+ const ans=shuf(EV.filter(e=>e[4])).slice(0,3).map(ev=>{const near=shuf(EV.filter(x=>x!==ev)).slice(0,3);return {key:"A|"+ev[2],q:"In che anno? "+ev[2],ok:ev[1],opts:[ev[1],...near.map(x=>x[1])],pag:ev[3],exp:""}});
+ const items=shuf([...qs,...vfs,...ans]);const res=[];let i=0;
+ const next=()=>{
+  if(i>=items.length)return fine();
+  setProg(i/items.length);const it=items[i];const opts=it.vf?it.opts:shuf(it.opts);
+  st.innerHTML=`<div class="qbox"><div class="meta"><span>Domanda ${i+1} di ${items.length}</span><span>${it.vf?"Vero o falso":""}</span></div><div class="qline"><div class="q">${esc(it.q)}</div>${spkBtn(it.q)}</div><div class="${it.vf?"vf":"opts"}">${opts.map(o=>`<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div></div>`;
+ };
+ st.onclick=e=>{const b=e.target.closest(".opt");if(!b)return;const it=items[i];const ok=b.dataset.o===it.ok;res.push({it,got:b.dataset.o,ok});
+  if(ok){if(it.key){delete S.err[it.key]}}else if(it.key){S.err[it.key]=(S.err[it.key]||0)+1}save();i++;next()};
+ const fine=()=>{
+  setProg(1);st.onclick=null;
+  const n=res.filter(r=>r.ok).length;let v=Math.round(n/items.length*20)/2;v=Math.max(4,v);
+  const vs=String(v).replace(".5","½");
+  record("verifica",v);addPts(n*5);
+  const wrong=res.filter(r=>!r.ok);
+  const msg=v>=9?"Da "+RANKS[RANKS.length-1][0]+"! Sei prontissimo.":v>=8?"Ottimo! Ripassa solo gli errori qui sotto.":v>=6?"Sufficiente, ma puoi fare di più: ripassa gli errori e riprova.":"Coraggio: rileggi il riassunto e poi rifai la prova.";
+  st.innerHTML=`<div class="qbox end"><div class="voto">${vs}</div><div><b>${n}</b> risposte giuste su ${items.length}</div>${marco(msg)}${wrong.length?`<div class="review"><div class="secLabel">Da ripassare</div>${wrong.map(r=>`<div><b>${esc(r.it.q)}</b><br><span class="w">${esc(r.got)}</span> → <span class="r">${esc(r.it.ok)}</span> <span class="pag" style="color:var(--muted)">${PG(r.it.pag)}</span>${r.it.exp?`<br><span class="note">${esc(r.it.exp)}</span>`:""}</div>`).join("")}</div>`:""}<div class="row" style="justify-content:center"><button class="btn" id="again">${ICON.redo} Rifai la verifica</button><button class="btn ghost" id="toS">Torna a studiare</button></div></div>`;
+  $("#again").onclick=startVerifica;$("#toS").onclick=()=>{TAB="studia";shell()};
+ };
+ next();
+}
+
+/* ============ PROGRESSI ============ */
+let confirmReset=false;
+function prog(){
+ const r=rank();const nxt=RANKS[r+1];
+ const totQ=QS.length;const okQ=QS.filter(q=>S.ok["Q|"+q[1]]).length;
+ M().innerHTML=marco(nxt?`Sei <b>${RANKS[r][0]}</b>! Ti mancano <b>${nxt[1]-S.pts}</b> punti per diventare <b>${nxt[0]}</b>.`:`Sei arrivato al grado più alto: <b>${RANKS[RANKS.length-1][0]}</b>!`)+
+ `<div class="stats"><div class="stat"><b>${S.pts}</b><span>punti</span></div><div class="stat"><b>${S.giocate}</b><span>partite</span></div><div class="stat"><b>${S.best.verifica!=null?String(S.best.verifica).replace(".5","½"):"–"}</b><span>miglior voto</span></div></div>
+ <div class="panel" style="display:flex;flex-direction:column;gap:12px"><div class="secLabel">${CAP.ranksT}</div><div class="ranks">${RANKS.map((x,k)=>`<div class="rk ${k===r?"on":k>r?"lock":""}"><b>${x[0]}</b><span>${x[1]} punti</span></div>`).join("")}</div></div>
+ <div class="panel" style="display:flex;flex-direction:column;gap:10px"><div class="secLabel">Domande del quiz indovinate <small>${okQ} su ${totQ}</small></div>${SEZ.map(s=>{const qs=QS.filter(q=>q[0]===s.id);const o=qs.filter(q=>S.ok["Q|"+q[1]]).length;return `<div class="sezbar"><span>${esc(s.t)}</span><span class="bar"><i style="width:${Math.round(o/qs.length*100)}%"></i></span><span>${o}/${qs.length}</span></div>`}).join("")}</div>
+ <div class="panel confirm" id="rs">${confirmReset?`<span>Cancellare tutti i punti e i progressi?</span><button class="btn small" id="rsY">Sì, cancella</button><button class="btn small ghost" id="rsN">No</button>`:`<button class="btn small ghost" id="rsA">Ricomincia da zero</button><span class="note">I progressi restano salvati solo su questo dispositivo.</span>`}</div>`;
+ const a=$("#rsA"),y=$("#rsY"),n=$("#rsN");
+ if(a)a.onclick=()=>{confirmReset=true;prog()};
+ if(n)n.onclick=()=>{confirmReset=false;prog()};
+ if(y)y.onclick=()=>{S={pts:0,best:{},err:{},ok:{},giocate:0,timer:S.timer};save();confirmReset=false;head();prog()};
+}
+
+useCap(CAP);
+shell();
+</script>
+</body>
+</html>
